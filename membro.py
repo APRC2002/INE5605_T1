@@ -1,15 +1,13 @@
 
-from abc import ABC, abstractmethod
-from voto import Voto
-
 class Membro:
-    @abstractmethod
-    def __init__(self, ID: int, Nome: str, Data_de_nascimento: str, Nacionalidade: str):
+    def __init__(self, ID: int, Nome: str, Data_de_nascimento: str, Nacionalidade: str, Genero: str, Ator: bool, Diretor: bool):
         self.__ID = ID
         self.__nome = Nome
         self.__data_de_nascimento = Data_de_nascimento
         self.__nacionalidade = Nacionalidade
-        self.__votos = []
+        self.__genero = Genero
+        self.__ator = Ator
+        self.__diretor = Diretor
 
     @property
     def ID(self):
@@ -43,10 +41,10 @@ class Membro:
     def nacionalidade(self, nacionalidade):
         self.__nacionalidade = nacionalidade
     
-    @abstractmethod
-    def votar(self, novo_voto):
+    """ def votar(self, novo_voto):
         if isinstance(novo_voto, Voto):
             for voto in self.__votos:
                 if voto.categoria == novo_voto.categoria:
                     self.__votos.remove(voto)
         self.__votos.append(novo_voto)
+    """
