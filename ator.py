@@ -1,4 +1,4 @@
-
+# teste de commit na web
 from membro import Membro
 from voto import Voto
 
