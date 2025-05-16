@@ -1,5 +1,7 @@
+from pessoa import Pessoa
 
-class MembroAcademia:
+
+class MembroAcademia(Pessoa):
     def __init__(self, ID: int, Nome: str, Data_de_nascimento: str, Nacionalidade: str, Genero: str, Ator: bool, Diretor: bool):
         self.__id = ID
         self.__nome = Nome
