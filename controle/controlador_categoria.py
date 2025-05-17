@@ -2,6 +2,7 @@
 from limite.tela_categoria import TelaCategoria
 from entidade.categoria import Categoria
 
+
 class ControladorCategoria():
 
   def __init__(self, controlador_sistema):

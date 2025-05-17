@@ -11,6 +11,7 @@ class TelaMembroAcademia():
     print("0 - Retornar")
 
     opcao = int(input("Escolha a opcao: "))
+    print('')
     return opcao
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
@@ -20,13 +21,14 @@ class TelaMembroAcademia():
     id = input("ID: ")
     nacionalidade = input("Nacionalidade: ")
     data_de_nascimento = input("Data de nascimento: ")
+    print('')
 
     return {"nome": nome,  "id": id, "nacionalidade": nacionalidade, "data_de_nascimento": data_de_nascimento}
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def mostra_membroAcademia(self, dados_membroAcademia):
     print("NOME DO MEMBRO: ", dados_membroAcademia["nome"])
-    print("ID DO MEMBRO: ", dados_membroAcademia["id"])
+    print("ID DO MEMBRO: ", dados_membroAcademia["ID"])
     print("NACIONALIDADE DO MEMBRO: ", dados_membroAcademia["nacionalidade"])
     print("DATA DE NASCIMENTO DO MEMBRO: ", dados_membroAcademia["data_de_nascimento"])
     print("\n")
@@ -38,3 +40,4 @@ class TelaMembroAcademia():
 
   def mostra_mensagem(self, msg):
     print(msg)
+    print('')

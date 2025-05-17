@@ -29,7 +29,7 @@ class Pessoa(ABC):
     
     @data_de_nascimento.setter
     @abstractmethod
-    def ID(self, data_de_nascimento):
+    def id(self, data_de_nascimento):
         pass
 
     @property

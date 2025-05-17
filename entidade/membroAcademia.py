@@ -1,8 +1,8 @@
-from pessoa import Pessoa
+from entidade.pessoa import Pessoa
 
 
 class MembroAcademia(Pessoa):
-    def __init__(self, ID: int, Nome: str, Data_de_nascimento: str, Nacionalidade: str, Genero: str, Ator: bool, Diretor: bool):
+    def __init__(self, ID: int, Nome: str, Data_de_nascimento: str, Nacionalidade: str):
         self.__id = ID
         self.__nome = Nome
         self.__data_de_nascimento = Data_de_nascimento
@@ -29,7 +29,7 @@ class MembroAcademia(Pessoa):
         return self.__data_de_nascimento
     
     @data_de_nascimento.setter
-    def ID(self, data_de_nascimento):
+    def data_de_nascimento(self, data_de_nascimento):
         self.__data_de_nascimento = data_de_nascimento
 
     @property
