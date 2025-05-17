@@ -2,16 +2,20 @@ from pessoa import Pessoa
 
 
 class Diretor(Pessoa):
-    def __init__(self, ID: int, Nome: str, Data_de_nascimento: str, Nacionalidade: str):
-        super().__init__(ID, Nome, Data_de_nascimento, Nacionalidade)
+    def __init__(self, id: int, nome: str, data_de_nascimento: str, nacionalidade: str):
+        self.__id = id
+        self.__nome = nome
+        self.__data_de_nascimento = data_de_nascimento
+        self.__nacionalidade = nacionalidade
+
 
     @property
     def id(self):
         return self.__id
     
     @id.setter
-    def id(self, ID):
-        self.__id = ID
+    def id(self, id):
+        self.__id = id
 
     @property
     def nome(self):
@@ -26,7 +30,7 @@ class Diretor(Pessoa):
         return self.__data_de_nascimento
     
     @data_de_nascimento.setter
-    def ID(self, data_de_nascimento):
+    def data_de_nascimento(self, data_de_nascimento):
         self.__data_de_nascimento = data_de_nascimento
 
     @property
