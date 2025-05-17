@@ -1,5 +1,5 @@
-from limite.tela_ator import TelaDiretor
-from entidade.ator import Diretor
+from limite.tela_diretor import TelaDiretor
+from entidade.diretor import Diretor
 
 class ControladorDiretor():
 
@@ -19,7 +19,7 @@ class ControladorDiretor():
     dados_diretor = self.__tela_diretor.pega_dados_diretor()
     l = self.pega_diretor_por_id(dados_diretor["id"])
     if l is None:
-      ator = Diretor(dados_diretor["nome"], dados_diretor["id"], dados_diretor["data_de_nascimento"], dados_diretor["nacionalidade"])
+      diretor = Diretor(dados_diretor["id"], dados_diretor["nome"], dados_diretor["data_de_nascimento"], dados_diretor["nacionalidade"])
       self.__diretores.append(diretor)
     else:
       self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor já existente")
@@ -31,8 +31,8 @@ class ControladorDiretor():
 
     if(diretor is not None):
       novos_dados_diretor = self.__tela_diretor.pega_dados_diretor()
-      diretor.nome = novos_dados_diretor["nome"]
       diretor.id = novos_dados_diretor["id"]
+      diretor.nome = novos_dados_diretor["nome"]
       diretor.data_de_nascimento = novos_dados_diretor["data_de_nascimento"]
       diretor.nacionalidade = novos_dados_diretor["nacionalidade"]
       self.lista_diretores()
@@ -40,16 +40,16 @@ class ControladorDiretor():
       self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor não existente")
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
-  def lista_atores(self):
+  def lista_diretores(self):
     for diretor in self.__diretores:
-      self.__tela_diretor.mostra_diretor({"nome": diretor.nome, "id": diretor.id, "data_de_nascimento": diretor.data_de_nascimento, "nacionalidade": diretor.nacionalidade})
+      self.__tela_diretor.mostra_diretor({"id": diretor.id, "nome": diretor.nome, "data_de_nascimento": diretor.data_de_nascimento, "nacionalidade": diretor.nacionalidade})
 
   def excluir_diretor(self):
     self.lista_diretores()
-    id_deiretor = self.__tela_diretor.seleciona_diretor()
+    id_diretor = self.__tela_diretor.seleciona_diretor()
     diretor = self.pega_diretor_por_id(id_diretor)
 
-    if(ator is not None):
+    if(diretor is not None):
       self.__diretores.remove(diretor)
       self.lista_diretores()
     else:
