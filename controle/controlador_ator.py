@@ -26,7 +26,7 @@ class ControladorAtor():
 
   def alterar_ator(self):
     self.lista_atores()
-    id_ator = self.__tela_livro.seleciona_ator()
+    id_ator = self.__tela_ator.seleciona_ator()
     ator = self.pega_ator_por_id(id_ator)
 
     if(ator is not None):
