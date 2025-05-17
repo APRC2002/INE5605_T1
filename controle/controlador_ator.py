@@ -25,7 +25,7 @@ class ControladorAtor():
       self.__tela_ator.mostra_mensagem("ATENCAO: Ator já existente")
 
   def alterar_ator(self):
-    self.lista_ator()
+    self.lista_atores()
     id_ator = self.__tela_livro.seleciona_ator()
     ator = self.pega_ator_por_id(id_ator)
 
@@ -36,32 +36,32 @@ class ControladorAtor():
       ator.data_de_nascimento = novos_dados_ator["data_de_nascimento"]
       ator.nacionalidade = novos_dados_ator["nacionalidade"]
       ator.genero = novos_dados_ator["genero"]
-      self.lista_ator()
+      self.lista_atores()
     else:
       self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
-  def lista_ator(self):
+  def lista_atores(self):
     for ator in self.__atores:
-      self.__tela_ator.mostra_ator({"titulo": livro.titulo, "codigo": livro.codigo})
+      self.__tela_ator.mostra_ator({"nome": ator.nome, "id": ator.id, "data_de_nascimento": ator.data_de_nascimento, "nacionalidade": ator.nacionalidade, "genero": ator.genero})
 
-  def excluir_livro(self):
-    self.lista_livro()
-    codigo_livro = self.__tela_livro.seleciona_livro()
-    livro = self.pega_livro_por_codigo(codigo_livro)
+  def excluir_ator(self):
+    self.lista_atores()
+    id_ator = self.__tela_ator.seleciona_ator()
+    ator = self.pega_ator_por_id(id_ator)
 
-    if(livro is not None):
-      self.__livros.remove(livro)
-      self.lista_livro()
+    if(ator is not None):
+      self.__atores.remove(ator)
+      self.lista_atores()
     else:
-      self.__tela_livro.mostra_mensagem("ATENCAO: Livro não existente")
+      self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_livro, 2: self.alterar_livro, 3: self.lista_livro, 4: self.excluir_livro, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_ator, 2: self.alterar_ator, 3: self.lista_atores, 4: self.excluir_ator, 0: self.retornar}
 
     continua = True
     while continua:
-      lista_opcoes[self.__tela_livro.tela_opcoes()]()
+      lista_opcoes[self.__tela_ator.tela_opcoes()]()
