@@ -17,11 +17,11 @@ class TelaCategoria():
     return opcao
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def pega_nome_categoria(self):
-    print("-------- DADOS CATEGORIA ----------")
-    nome = input("Nome: ")
-
-    return nome
+  def pega_nome_categoria(self):                 # NO EXEMPLO ESSE MÉTODO ERA USADO PRA CRIAR UM OBJETO, PORTANTO PEGAVA 
+    print("-------- DADOS CATEGORIA ----------") # TODOS OS DADOS NECESSÁRIOS. NESSE CASO, ELE PEGA SÓ O NOME POIS OS 
+    nome = input("Nome: ")                       # INDICADOS SÃO INICIALIZADOS COMO UMA LISTA VAZIA
+                                                 # OU TIRA ESSA REDUNDANCIA COM pega_nome OU RESOLVE O PROBLEMA DE INICIALIZAR 
+    return nome                                  # JÁ COM OS INDICADOS
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def pega_nome(self):

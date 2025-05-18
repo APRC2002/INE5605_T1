@@ -5,7 +5,7 @@ class TelaAtor():
     print("Escolha a opcao")
     print("1 - Incluir Ator")
     print("2 - Alterar Ator")
-    print("3 - Listar Atores)
+    print("3 - Listar Atores")
     print("4 - Excluir Ator")
     print("0 - Retornar")
 

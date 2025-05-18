@@ -1,19 +1,19 @@
+from entidade.diretor import Diretor
+from entidade.ator import Ator
+from entidade.membroAcademia import MembroAcademia
 
-from INE5605_T1.entidade.membroAcademia import Membro
 
 class Filme:
-    def __init__(self, titulo: str, diretor: Membro, ator_principal: Membro, atriz_principal: Membro):
+    def __init__(self, titulo: str, diretor: Diretor, ator_principal: MembroAcademia, atriz_principal: Ator):
         if isinstance(titulo, str):
             self.__titulo = titulo
-        if isinstance(diretor, Membro):
-            if diretor.diretor == True:
-                self.__diretor = diretor
-        if isinstance(ator_principal, Membro):
-            if ator_principal.ator == True:
-                self.__ator_principal = ator_principal
-        if isinstance(ator_principal, Membro):
-            if atriz_principal.ator == True:
-                self.__atriz_principal = atriz_principal
+        if isinstance(diretor, Diretor):
+            self.__diretor = diretor
+        if isinstance(ator_principal, Ator):
+            self.__ator_principal = ator_principal
+        if isinstance(atriz_principal, Ator):
+            self.__atriz_principal = atriz_principal
+        self.__categorias = []
     
     @property
     def titulo(self):
@@ -30,9 +30,8 @@ class Filme:
     
     @diretor.setter
     def diretor(self, diretor):
-        if isinstance(diretor, Membro):
-            if diretor.diretor == True:
-                self.__diretor = diretor
+        if isinstance(diretor, Diretor):
+            self.__diretor = diretor
     
     @property
     def ator_principal(self):
@@ -40,9 +39,8 @@ class Filme:
     
     @ator_principal.setter
     def ator_principal(self, ator):
-        if isinstance(ator, Membro):
-            if ator.ator == True:
-                self.__ator_principal = ator
+        if isinstance(ator, Ator):
+            self.__ator_principal = ator
 
     @property
     def atriz_principal(self):
@@ -50,6 +48,13 @@ class Filme:
     
     @atriz_principal.setter
     def atriz_principal(self, atriz):
-        if isinstance(atriz, Membro):
-            if atriz.ator == True:
-                self.__atriz_principal = atriz
+        if isinstance(atriz, Ator):
+            self.__atriz_principal = atriz
+    
+    @property
+    def categorias(self):
+        return self.__categorias
+
+    @categorias.setter
+    def categorias(self, categorias):
+        self.__categorias = categorias

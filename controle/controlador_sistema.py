@@ -4,7 +4,7 @@ from controle.controlador_ator import ControladorAtor
 from controle.controlador_diretor import ControladorDiretor
 from controle.controlador_filme import ControladorFilme
 from controle.controlador_categoria import ControladorCategoria
-from controle.controlador_votacao import ControladorVotacao
+#from controle.controlador_votacao import ControladorVotacao
 
 class ControladorSistema:
 
@@ -14,7 +14,7 @@ class ControladorSistema:
         self.__controlador_diretor = ControladorDiretor(self)
         self.__controlador_filme = ControladorFilme(self)
         self.__controlador_categoria = ControladorCategoria(self)
-        self.__controlador_votacao = ControladorVotacao(self)
+        #self.__controlador_votacao = ControladorVotacao(self)
         self.__tela_sistema = TelaSistema()
 
     @property
@@ -37,9 +37,9 @@ class ControladorSistema:
     def controlador_categoria(self):
         return self.__controlador_categoria
     
-    @property
-    def controlador_votacao(self):
-        return self.__controlador_votacao
+    #@property
+    #def controlador_votacao(self):
+    #    return self.__controlador_votacao
 
     
 
@@ -66,16 +66,16 @@ class ControladorSistema:
         # Chama o controlador de Categoria
         self.__controlador_categoria.abre_tela()
 
-    def cadastra_votacao(self):
+    #def cadastra_votacao(self):
         # Chama o controlador de Votacao
-        self.__controlador_votacao.abre_tela()
+    #    self.__controlador_votacao.abre_tela()
 
     def encerra_sistema(self):
         exit(0)
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastra_membroAcademia, 2: self.cadastra_ator, 3: self.cadastra_diretor, 4: self.cadastra_filme, 
-                        5: self.cadastra_categoria, 6: self.cadastra_votacao, 0: self.encerra_sistema}
+                        5: self.cadastra_categoria, 0: self.encerra_sistema} #6: self.cadastra_votacao
 
         while True:
             opcao_escolhida = self.__tela_sistema.tela_opcoes()

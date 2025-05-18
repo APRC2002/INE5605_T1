@@ -21,6 +21,7 @@ class ControladorDiretor():
     if l is None:
       diretor = Diretor(dados_diretor["id"], dados_diretor["nome"], dados_diretor["data_de_nascimento"], dados_diretor["nacionalidade"])
       self.__diretores.append(diretor)
+      return diretor
     else:
       self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor já existente")
 
