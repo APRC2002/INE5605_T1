@@ -7,8 +7,8 @@ class ControladorCategoria():
 
   def __init__(self, controlador_sistema):
     self.__categorias = []
-    self.__tela_categoria = TelaCategoria()
     self.__controlador_sistema = controlador_sistema
+    self.__tela_categoria = TelaCategoria()
 
   def pega_categoria(self, nome: str):
     for categoria in self.__categorias:
@@ -22,7 +22,7 @@ class ControladorCategoria():
     categoria = Categoria(nome_categoria)
     self.__categorias.append(categoria)
 
-  def alterar_nome(self):
+  def alterar_categoria(self):
     self.lista_categorias()
     nome_categoria = self.__tela_categoria.seleciona_categoria()
     categoria = self.pega_categoria(nome_categoria)
