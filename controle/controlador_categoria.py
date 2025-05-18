@@ -7,8 +7,8 @@ class ControladorCategoria():
 
   def __init__(self, controlador_sistema):
     self.__categorias = []
-    self.__tela_categoria = TelaCategoria()
     self.__controlador_sistema = controlador_sistema
+    self.__tela_categoria = TelaCategoria()
 
   def pega_categoria(self, nome: str):
     for categoria in self.__categorias:
@@ -22,7 +22,7 @@ class ControladorCategoria():
     categoria = Categoria(nome_categoria)
     self.__categorias.append(categoria)
 
-  def alterar_nome(self):
+  def alterar_categoria(self):
     self.lista_categorias()
     nome_categoria = self.__tela_categoria.seleciona_categoria()
     categoria = self.pega_categoria(nome_categoria)
@@ -57,15 +57,15 @@ class ControladorCategoria():
     else:
       self.__tela_categoria.mostra_mensagem("ATENCAO: Categoria não existente")
 
-  def redefinir_indicados(self):
+  def alterar_indicados(self):
     self.lista_categorias()
     nome_categoria = self.__tela_categoria.seleciona_categoria()
     categoria = self.pega_categoria(nome_categoria)
 
     if(categoria is not None):
       novos_indicados = self.__tela_categoria.pega_indicados().split(",") # oque acontece com esse .split() se o input for de um candidato só?????????
-      print(novos_indicados)
       categoria.set_indicados(novos_indicados)
+      self.lista_categorias()
     else:
       self.__tela_categoria.mostra_mensagem("ATENCAO: Categoria não existente")
 
@@ -89,7 +89,7 @@ class ControladorCategoria():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_categoria, 2: self.alterar_nome, 3: self.adicionar_indicados, 4: self.remover_indicados, 5: self.redefinir_indicados, 6: self.lista_categorias, 7: self.excluir_categoria, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_categoria, 2: self.alterar_nome, 3: self.adicionar_indicados, 4: self.remover_indicados, 5: self.alterar_indicados, 6: self.lista_categorias, 7: self.excluir_categoria, 0: self.retornar}
 
     continua = True
     while continua:
