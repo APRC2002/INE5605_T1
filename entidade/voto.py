@@ -10,19 +10,19 @@ class Voto:
             self.__vencedor = vencedor
     
     @property
-    def votante(self):
+    def votante(self) -> MembroAcademia:
         return self.__votante
     
     @votante.setter
-    def votante(self, votante):
-        if isinstance(votante, str):
+    def votante(self, votante: MembroAcademia):
+        if isinstance(votante, MembroAcademia):
             self.__votante = votante
 
     @property
-    def vencedor(self):
+    def vencedor(self)-> Filme | MembroAcademia:
         return self.__vencedor
     
     @vencedor.setter
-    def vencedor(self, vencedor):
+    def vencedor(self, vencedor: Filme | MembroAcademia):
         if isinstance(vencedor, MembroAcademia) or isinstance(vencedor, Filme):
             self.__vencedor = vencedor
