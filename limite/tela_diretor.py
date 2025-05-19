@@ -3,10 +3,8 @@ class TelaDiretor():
   def tela_opcoes(self):
     print("-------- DIRETOR ----------")
     print("Escolha a opcao")
-    print("1 - Incluir Diretor")
-    print("2 - Alterar Diretor")
-    print("3 - Listar Diretor")
-    print("4 - Excluir Diretor")
+    print("1 - Alterar Diretor")
+    print("2 - Listar Diretor")
     print("0 - Retornar")
 
     opcao = int(input("Escolha a opcao: "))
