@@ -60,7 +60,7 @@ class ControladorDiretor():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_diretor, 2: self.alterar_diretor, 3: self.lista_diretores, 4: self.excluir_diretor, 0: self.retornar}
+    lista_opcoes = {1: self.alterar_diretor, 2: self.lista_diretores, 0: self.retornar}
 
     continua = True
     while continua:
