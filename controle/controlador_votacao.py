@@ -36,9 +36,9 @@ class ControladorVotacao():
         self.__tela_votacao.mostra_mensagem("ATENCAO: Voto não existente")
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
-  def lista_atores(self):
-    for ator in self.__atores:
-      self.__tela_ator.mostra_ator({"nome": ator.nome, "id": ator.id, "data_de_nascimento": ator.data_de_nascimento, "nacionalidade": ator.nacionalidade, "genero": ator.genero})
+  def lista_votos(self):
+    for voto in self.__votos:
+      self.__tela_votacao.mostra_voto(dados_voto)
 
   def excluir_ator(self):
     self.lista_atores()
