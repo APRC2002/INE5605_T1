@@ -1,3 +1,5 @@
+from entidade.filme import Filme
+from entidade.voto import Voto
 
 class Categoria:
     def __init__(self, nome: str):
