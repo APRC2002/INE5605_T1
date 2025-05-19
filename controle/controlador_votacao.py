@@ -40,16 +40,16 @@ class ControladorVotacao():
     for voto in self.__votos:
       self.__tela_votacao.mostra_voto(dados_voto)
 
-  def excluir_ator(self):
-    self.lista_atores()
-    id_ator = self.__tela_ator.seleciona_ator()
-    ator = self.pega_ator_por_id(id_ator)
+  def excluir_voto(self):
+    self.lista_votos()
+    id_voto = self.__tela_votacao.seleciona_voto()
+    voto = self.pega_voto_por_id(id_voto)
 
-    if(ator is not None):
-      self.__atores.remove(ator)
-      self.lista_atores()
+    if(voto is not None):
+      self.__votos.remove(voto)
+      self.lista_votos()
     else:
-      self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
+      self.__tela_votacao.mostra_mensagem("ATENCAO: Voto não existente")
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
