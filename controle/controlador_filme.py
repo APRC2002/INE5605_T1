@@ -28,11 +28,14 @@ class ControladorFilme():
 
   def lista_filmes(self):
     for f in self.__filmes:
+      categorias = []
+      for categoria in f.categorias:
+        categorias.append(categoria.nome)
       self.__tela_filme.mostra_filme({"titulo": f.titulo,
                                       "ator": f.ator_principal,
                                       "atriz": f.atriz_principal,
                                       "diretor": f.diretor,
-                                      "categorias": f.categorias})
+                                      "categorias": categorias})
 
   def excluir_filme(self):
     self.lista_filmes()
@@ -54,3 +57,13 @@ class ControladorFilme():
     continua = True
     while continua:
       lista_opcoes[self.__tela_filme.tela_opcoes()]()
+  
+  def retorna_filme(self, titulo_do_filme):
+    for filme in self.__filmes:
+      if filme.titulo == titulo_do_filme:
+        return filme
+
+  def inclui_categoria(self, filme, categoria):
+    for f in self.__filmes:
+      if f.titulo == filme:
+        f.adiciona_categoria(categoria)
