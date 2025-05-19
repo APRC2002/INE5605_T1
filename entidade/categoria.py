@@ -1,5 +1,3 @@
-from entidade.filme import Filme
-from entidade.voto import Voto
 
 class Categoria:
     def __init__(self, nome: str):
@@ -21,13 +19,10 @@ class Categoria:
     @indicados.setter
     def indicados(self, indicados):
         self.__indicados = indicados
-    
-    def set_indicados(self, indicados):
-        self.__indicados = indicados # por algum caralaho de motivo redefinir_indicados não estava funcionando com o setter????????
 
-    def inclui_indicados(self, indicados):
+    def inclui_indicado(self, indicados):
         self.__indicados.append(indicados)
     
-    def remove_indicados(self, indicados):
+    def remove_indicado(self, indicados):
         for indicado in indicados:
             self.__indicados.remove(indicado)
