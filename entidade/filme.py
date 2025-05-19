@@ -58,3 +58,6 @@ class Filme:
     @categorias.setter
     def categorias(self, categorias):
         self.__categorias = categorias
+
+    def adiciona_categoria(self, categoria):
+        self.__categorias.append(categoria)
