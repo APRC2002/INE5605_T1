@@ -16,29 +16,24 @@ class ControladorVotacao():
     self.__controlador_sistema.controlador_categorias.lista_categorias()
     dados_voto = self.__tela_votacao.pega_dados_voto()
 
-    membros_Academia = self.__controlador_sistema.controlador_membrosAcademia.pega_membro_por_id(dados_voto["id"])
-    categorias = self.__controlador_sistema.controlador_categorias.pega_categoria_por_nome(dados_voto["nome"])
+    membros_academia = self.__controlador_sistema.controlador_membrosAcademia.pega_membro_por_id(dados_voto["id"])
+    categoria = self.__controlador_sistema.controlador_categorias.pega_categoria_por_nome(dados_voto["nome"])
     if (membro_Academia is not None and categoria is not None):
       voto = Voto(membro_academia, categoria)
       self.__votos.append(voto)
     else:
       self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
 
-  def alterar_ator(self):
-    self.lista_atores()
-    id_ator = self.__tela_ator.seleciona_ator()
-    ator = self.pega_ator_por_id(id_ator)
-
-    if(ator is not None):
-      novos_dados_ator = self.__tela_ator.pega_dados_ator()
-      ator.nome = novos_dados_ator["nome"]
-      ator.id = novos_dados_ator["id"]
-      ator.data_de_nascimento = novos_dados_ator["data_de_nascimento"]
-      ator.nacionalidade = novos_dados_ator["nacionalidade"]
-      ator.genero = novos_dados_ator["genero"]
-      self.lista_atores()
+  def alterar_voto(self):
+    self.lista_votos()
+    id_voto = self.__tela_votacao.seleciona_voto_por_id()
+    voto_para_alterar = None
+    for voto in self.__votos:
+      if voto.id == id_voto:
+        voto_para_alterar = voto
+        break
     else:
-      self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
+        self.__tela_votacao.mostra_mensagem("ATENCAO: Voto não existente")
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_atores(self):
