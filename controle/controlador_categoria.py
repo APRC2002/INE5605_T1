@@ -89,7 +89,7 @@ class ControladorCategoria():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_categoria, 2: self.alterar_nome, 3: self.adicionar_indicados, 4: self.remover_indicados, 5: self.alterar_indicados, 6: self.lista_categorias, 7: self.excluir_categoria, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_categoria, 2: self.alterar_categoria, 3: self.adicionar_indicados, 4: self.remover_indicados, 5: self.alterar_indicados, 6: self.lista_categorias, 7: self.excluir_categoria, 0: self.retornar}
 
     continua = True
     while continua:
