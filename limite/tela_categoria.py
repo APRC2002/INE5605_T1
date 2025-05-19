@@ -8,20 +8,12 @@ class TelaCategoria():
     print("2 - Alterar Nome")
     print("3 - Adicionar Indicados")
     print("4 - Remover Indicados")
-    print("5 - Redefinir Indicados")
-    print("6 - Listar Categorias")
-    print("7 - Excluir Categoria")
+    print("5 - Listar Categorias")
+    print("6 - Excluir Categoria")
     print("0 - Retornar")
 
     opcao = int(input("Escolha a opcao: "))
     return opcao
-
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def pega_nome_categoria(self):                 # NO EXEMPLO ESSE MÉTODO ERA USADO PRA CRIAR UM OBJETO, PORTANTO PEGAVA 
-    print("-------- DADOS CATEGORIA ----------") # TODOS OS DADOS NECESSÁRIOS. NESSE CASO, ELE PEGA SÓ O NOME POIS OS 
-    nome = input("Nome: ")                       # INDICADOS SÃO INICIALIZADOS COMO UMA LISTA VAZIA
-                                                 # OU TIRA ESSA REDUNDANCIA COM pega_nome OU RESOLVE O PROBLEMA DE INICIALIZAR 
-    return nome                                  # JÁ COM OS INDICADOS
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def pega_nome(self):
@@ -31,11 +23,11 @@ class TelaCategoria():
     return nome
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def pega_indicados(self):
-    print("-------- INDICADOS NA CATEGORIA ----------")
-    indicados = input("Indicados: ")
+  def pega_indicado(self):
+    print("-------- INDICADO NA CATEGORIA ----------")
+    indicado = input("Indicado: ")
 
-    return indicados
+    return indicado
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def mostra_categoria(self, dados_categoria):
