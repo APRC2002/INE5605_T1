@@ -3,10 +3,8 @@ class TelaAtor():
   def tela_opcoes(self):
     print("-------- ATOR ----------")
     print("Escolha a opcao")
-    print("1 - Incluir Ator")
-    print("2 - Alterar Ator")
-    print("3 - Listar Atores")
-    print("4 - Excluir Ator")
+    print("1 - Alterar Ator")
+    print("2 - Listar Atores")
     print("0 - Retornar")
 
     opcao = int(input("Escolha a opcao: "))
