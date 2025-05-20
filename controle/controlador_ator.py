@@ -15,8 +15,8 @@ class ControladorAtor():
         return ator
     return None
 
-  def incluir_ator(self):
-    dados_ator = self.__tela_ator.pega_dados_ator()
+  def incluir_ator(self, genero):
+    dados_ator = self.__tela_ator.pega_dados_ator(genero)
     a = self.pega_ator_por_id(dados_ator["id"])
     if a is None:
       ator = Ator(dados_ator["id"], dados_ator["nome"], dados_ator["data_de_nascimento"], dados_ator["nacionalidade"], dados_ator["genero"])

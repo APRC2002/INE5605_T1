@@ -21,8 +21,8 @@ class ControladorFilme():
   def incluir_filme(self):
     titulo = self.__tela_filme.pega_titulo_filme()
     diretor = self.__controlador_sistema.controlador_diretor.incluir_diretor()
-    ator = self.__controlador_sistema.controlador_ator.incluir_ator()
-    atriz = self.__controlador_sistema.controlador_ator.incluir_ator()
+    ator = self.__controlador_sistema.controlador_ator.incluir_ator("M")
+    atriz = self.__controlador_sistema.controlador_ator.incluir_ator("F")
     filme = Filme(titulo, diretor, ator, atriz)
     self.__filmes.append(filme)
 

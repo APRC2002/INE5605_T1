@@ -13,14 +13,20 @@ class TelaAtor():
   #fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def pega_dados_ator(self, genero_esperado):
     print("")
-    print("-------- DADOS ATOR ----------")
-    id = input("id: ")
-    nome = input("nome: ")
-    data_de_nascimento = input("data de nascimento: ")
-    nacionalidade = input("nacionalidade: ")
-    genero = input("genero: ")
-    #if genero != genero_esperado:
-      #raise generoInvalidoException
+    if genero_esperado == "M":
+      print("-------- DADOS ATOR ----------")
+      id = input("id: ")
+      nome = input("nome: ")
+      data_de_nascimento = input("data de nascimento: ")
+      nacionalidade = input("nacionalidade: ")
+      genero = "M"
+    elif genero_esperado == "F":
+      print("-------- DADOS ATRIZ ----------")
+      id = input("id: ")
+      nome = input("nome: ")
+      data_de_nascimento = input("data de nascimento: ")
+      nacionalidade = input("nacionalidade: ")
+      genero = "F"
 
     return {"id": id, "nome": nome, "data_de_nascimento": data_de_nascimento, "nacionalidade": nacionalidade, "genero": genero}
 
