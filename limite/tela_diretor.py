@@ -12,6 +12,7 @@ class TelaDiretor():
 
   #fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def pega_dados_diretor(self):
+    print("")
     print("-------- DADOS DIRETOR ----------")
     id = input("id: ")
     nome = input("nome: ")

@@ -1,6 +1,7 @@
 
 class TelaFilme():
   def tela_opcoes(self):
+    print("")
     print("-------- FILMES  ----------")
     print("Escolha a opcao")
     print("1 - Incluir Filme")
@@ -12,6 +13,7 @@ class TelaFilme():
     return opcao
 
   def pega_titulo_filme(self):
+    print("")
     print("-------- TITULO DO FILME ----------")
     nome = input("Titulo: ")
     return nome

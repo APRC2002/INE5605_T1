@@ -45,6 +45,8 @@ class ControladorAtor():
   def lista_atores(self):
     for ator in self.__atores:
       self.__tela_ator.mostra_ator({"nome": ator.nome, "id": ator.id, "data_de_nascimento": ator.data_de_nascimento, "nacionalidade": ator.nacionalidade, "genero": ator.genero})
+    if len(self.__atores) == 0:
+      print("Não há atores cadastrados")
 
   def excluir_ator(self):
     self.lista_atores()

@@ -2,6 +2,7 @@
 class TelaMembroAcademia():
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def tela_opcoes(self):
+    print("")
     print("-------- ACADEMIA ----------")
     print("Escolha a opcao")
     print("1 - Incluir Membro")
