@@ -75,7 +75,7 @@ class ControladorSistema:
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastra_membroAcademia, 2: self.cadastra_ator, 3: self.cadastra_diretor, 4: self.cadastra_filme, 
-                        5: self.cadastra_categoria, 0: self.encerra_sistema} 6: self.cadastra_votacao
+                        5: self.cadastra_categoria, 6: self.cadastra_votacao, 0: self.encerra_sistema}
 
         while True:
             opcao_escolhida = self.__tela_sistema.tela_opcoes()

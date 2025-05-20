@@ -16,9 +16,9 @@ class ControladorVotacao():
     self.__controlador_sistema.controlador_categorias.lista_categorias()
     dados_voto = self.__tela_votacao.pega_dados_voto()
 
-    membros_academia = self.__controlador_sistema.controlador_membrosAcademia.pega_membro_por_id(dados_voto["id"])
+    membro_academia = self.__controlador_sistema.controlador_membrosAcademia.pega_membro_por_id(dados_voto["id"])
     categoria = self.__controlador_sistema.controlador_categorias.pega_categoria_por_nome(dados_voto["nome"])
-    if (membro_Academia is not None and categoria is not None):
+    if (membro_academia is not None and categoria is not None):
       voto = Voto(membro_academia, categoria)
       self.__votos.append(voto)
     else:
@@ -38,7 +38,7 @@ class ControladorVotacao():
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_votos(self):
     for voto in self.__votos:
-      self.__tela_votacao.mostra_voto(dados_voto)
+      self.__tela_votacao.mostra_voto({"votante": voto.votante, "categoria": voto.categoria, "votado": voto.vencedor})
 
   def excluir_voto(self):
     self.lista_votos()
@@ -55,7 +55,7 @@ class ControladorVotacao():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_voto, 2: self.altera_voto, 3: self.lista_voto, 4: self.exclui_voto, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_voto, 2: self.alterar_voto, 3: self.lista_votos, 4: self.excluir_voto, 0: self.retornar}
 
     continua = True
     while continua:
