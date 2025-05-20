@@ -16,8 +16,8 @@ class ControladorVotacao():
     self.__controlador_sistema.controlador_categoria.listar_categorias()
     dados_voto = self.__tela_votacao.pega_dados_voto()
 
-    membro_academia = self.__controlador_sistema.controlador_membrosAcademia.pega_membro_por_id(dados_voto["id"])
-    categoria = self.__controlador_sistema.controlador_categorias.pega_categoria_por_nome(dados_voto["nome"])
+    membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
+    categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
     if (membro_academia is not None and categoria is not None):
       voto = Voto(membro_academia, categoria)
       self.__votos.append(voto)
