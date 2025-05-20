@@ -12,8 +12,8 @@ class ControladorVotacao():
     
 
   def incluir_voto(self):
-    self.__controlador_sistema.controlador_membroAcademia.lista_membros()
-    self.__controlador_sistema.controlador_categorias.lista_categorias()
+    self.__controlador_sistema.controlador_membroAcademia.lista_membrosAcademia()
+    self.__controlador_sistema.controlador_categoria.listar_categorias()
     dados_voto = self.__tela_votacao.pega_dados_voto()
 
     membro_academia = self.__controlador_sistema.controlador_membrosAcademia.pega_membro_por_id(dados_voto["id"])
