@@ -18,10 +18,11 @@ class ControladorVotacao():
 
     membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
     categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
-    vencedor = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
+    votado = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
     if (membro_academia is not None and categoria is not None):
-      voto = Voto(membro_academia, categoria, vencedor)
-      self.__votos.append(voto)
+      if categoria in votado.categorias:
+        voto = Voto(membro_academia, categoria, votado)
+        self.__votos.append(voto)
     else:
       self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
 
@@ -41,11 +42,14 @@ class ControladorVotacao():
     else:
       self.__tela_votacao.mostra_mensagem("ATENCAO: Voto não existente")
 
+  def mostra_vencedores(self):
+    pass
+
   def retornar(self):
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_voto, 2: self.lista_votos, 3: self.excluir_voto, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_voto, 2: self.lista_votos, 3: self.excluir_voto, 4: self.mostra_vencedores, 0: self.retornar}
 
     continua = True
     while continua:

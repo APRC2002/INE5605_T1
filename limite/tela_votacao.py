@@ -6,6 +6,7 @@ class TelaVotacao():
     print("1 - Incluir Voto")
     print("2 - Listar Votos")
     print("3 - Excluir Voto")
+    print("4 - Visualizar vencedores")
     print("0 - Retornar")
 
     opcao = int(input("Escolha a opcao: "))
