@@ -25,17 +25,6 @@ class ControladorVotacao():
     else:
       self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
 
-  def alterar_voto(self):
-    self.lista_votos()
-    id_voto = self.__tela_votacao.seleciona_voto_por_id()
-    voto_para_alterar = None
-    for voto in self.__votos:
-      if voto.id == id_voto:
-        voto_para_alterar = voto
-        break
-    else:
-        self.__tela_votacao.mostra_mensagem("ATENCAO: Voto não existente")
-
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_votos(self):
     for voto in self.__votos:
@@ -56,7 +45,7 @@ class ControladorVotacao():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_voto, 2: self.alterar_voto, 3: self.lista_votos, 4: self.excluir_voto, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_voto, 2: self.lista_votos, 3: self.excluir_voto, 0: self.retornar}
 
     continua = True
     while continua:
