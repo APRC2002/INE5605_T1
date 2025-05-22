@@ -16,7 +16,8 @@ class TelaVotacao():
     print("-------- DADOS DO VOTO ----------")
     id_membro = input("ID do votante: ")
     nome_categoria = input("Nome da Categoria: ")
-    return {"id": id_membro, "nome": nome_categoria}
+    vencedor = input("Vencedor: ")
+    return {"id": id_membro, "nome": nome_categoria, "vencedor": vencedor}
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def mostra_voto(self, dados_voto):

@@ -18,8 +18,9 @@ class ControladorVotacao():
 
     membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
     categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
+    vencedor = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["vencedor"])
     if (membro_academia is not None and categoria is not None):
-      voto = Voto(membro_academia, categoria)
+      voto = Voto(membro_academia, categoria, vencedor)
       self.__votos.append(voto)
     else:
       self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
