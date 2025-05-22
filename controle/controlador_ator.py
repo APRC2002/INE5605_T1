@@ -9,6 +9,10 @@ class ControladorAtor():
     self.__controlador_sistema = controlador_sistema
     self.__tela_ator = TelaAtor()
 
+  @property
+  def atores(self):
+    return self.__atores
+  
   def pega_ator_por_id(self, id: int):
     for ator in self.__atores:
       if(ator.id == id):
@@ -58,6 +62,10 @@ class ControladorAtor():
       self.lista_atores()
     else:
       self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
+  
+  def excluir_ator_por_id(self, id):
+    ator = self.pega_ator_por_id(id)
+    self.__atores.remove(ator)
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()

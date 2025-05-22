@@ -42,6 +42,18 @@ class ControladorFilme():
     titulo_filme = self.__tela_filme.seleciona_filme()
     filme = self.pega_filme_por_nome(titulo_filme)
     if (filme is not None):
+      ator = filme.ator_principal
+      atriz = filme.atriz_principal
+      diretor = filme.diretor
+      for a in self.__controlador_sistema.controlador_ator.atores:
+        if a.id == ator.id:
+          self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
+      for a in self.__controlador_sistema.controlador_ator.atores:
+        if a.id == atriz.id:
+          self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
+      for d in self.__controlador_sistema.controlador_diretor.diretores:
+        if d.id == diretor.id:
+          self.__controlador_sistema.controlador_diretor.excluir_diretor_por_id(d.id)
       self.__filmes.remove(filme)
       self.lista_filmes()
     else:

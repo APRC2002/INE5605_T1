@@ -9,6 +9,10 @@ class ControladorDiretor():
     self.__controlador_sistema = controlador_sistema
     self.__tela_diretor = TelaDiretor()
 
+  @property
+  def diretores(self):
+    return self.__diretores
+  
   def pega_diretor_por_id(self, id: int):
     for diretor in self.__diretores:
       if(diretor.id == id):
@@ -58,6 +62,10 @@ class ControladorDiretor():
     else:
       self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor não existente")
 
+  def excluir_diretor_por_id(self, id):
+    diretor = self.pega_diretor_por_id(id)
+    self.__diretores.remove(diretor)
+  
   def retornar(self):
     self.__controlador_sistema.abre_tela()
 
