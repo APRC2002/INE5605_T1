@@ -18,7 +18,7 @@ class ControladorVotacao():
 
     membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
     categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
-    vencedor = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["vencedor"])
+    vencedor = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
     if (membro_academia is not None and categoria is not None):
       voto = Voto(membro_academia, categoria, vencedor)
       self.__votos.append(voto)
@@ -39,7 +39,7 @@ class ControladorVotacao():
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_votos(self):
     for voto in self.__votos:
-      self.__tela_votacao.mostra_voto({"votante": voto.votante, "categoria": voto.categoria, "votado": voto.vencedor})
+      self.__tela_votacao.mostra_voto({"votante": voto.votante.nome, "categoria": voto.categoria.nome, "votado": voto.vencedor.titulo})
 
   def excluir_voto(self):
     self.lista_votos()

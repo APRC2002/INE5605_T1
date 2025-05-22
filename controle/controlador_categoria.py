@@ -7,6 +7,8 @@ class ControladorCategoria():
 
   def __init__(self, controlador_sistema):
     self.__categorias = []
+    categoria = Categoria("Melhor filme")
+    self.__categorias.append(categoria)
     self.__controlador_sistema = controlador_sistema
     self.__tela_categoria = TelaCategoria()
 

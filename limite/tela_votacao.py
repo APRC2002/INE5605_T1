@@ -16,15 +16,16 @@ class TelaVotacao():
     print("-------- DADOS DO VOTO ----------")
     id_membro = input("ID do votante: ")
     nome_categoria = input("Nome da Categoria: ")
-    vencedor = input("Vencedor: ")
-    return {"id": id_membro, "nome": nome_categoria, "vencedor": vencedor}
+    votado = input("Vencedor: ")
+    return {"id": id_membro, "nome": nome_categoria, "votado": votado}
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def mostra_voto(self, dados_voto):
     print("\n-------- DETALHES DO VOTO ----------")
-    print(f"ID DO VOTO: {dados_voto['id']}")
-    print(f"MEMBRO: {dados_voto['membro']}")
+    #print(f"ID DO VOTO: {dados_voto['id']}")
+    print(f"MEMBRO: {dados_voto['votante']}")
     print(f"CATEGORIA: {dados_voto['categoria']}")
+    print(f"VENCEDOR: {dados_voto["votado"]}")
     print("\n")
 
   #BLZ
