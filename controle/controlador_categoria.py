@@ -12,6 +12,10 @@ class ControladorCategoria():
     self.__controlador_sistema = controlador_sistema
     self.__tela_categoria = TelaCategoria()
 
+  @property
+  def categorias(self):
+    return self.__categorias
+
   def pega_categoria(self, nome: str):
     for categoria in self.__categorias:
       if(categoria.nome == nome):

@@ -31,10 +31,10 @@ class Voto:
             self.__categoria = categoria
 
     @property
-    def vencedor(self)-> Filme | MembroAcademia:
+    def votado(self)-> Filme | MembroAcademia:
         return self.__vencedor
     
-    @vencedor.setter
-    def vencedor(self, vencedor: Filme | MembroAcademia):
+    @votado.setter
+    def votado(self, vencedor: Filme | MembroAcademia):
         if isinstance(vencedor, MembroAcademia) or isinstance(vencedor, Filme):
             self.__vencedor = vencedor

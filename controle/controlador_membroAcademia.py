@@ -5,7 +5,11 @@ class ControladorMembroAcademia():
 
   def __init__(self, controlador_sistema):
     self.__membrosAcademia = []
-    membro = MembroAcademia("123", "Membro", 123, "BR")
+    membro = MembroAcademia("123", "Membro1", 123, "BR")
+    self.__membrosAcademia.append(membro)
+    membro = MembroAcademia("234", "Membro2", 123, "BR")
+    self.__membrosAcademia.append(membro)
+    membro = MembroAcademia("345", "Membro3", 123, "BR")
     self.__membrosAcademia.append(membro)
     self.__tela_membroAcademia = TelaMembroAcademia()
     self.__controlador_sistema = controlador_sistema

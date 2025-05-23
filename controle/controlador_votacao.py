@@ -29,7 +29,7 @@ class ControladorVotacao():
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_votos(self):
     for voto in self.__votos:
-      self.__tela_votacao.mostra_voto({"votante": voto.votante.nome, "categoria": voto.categoria.nome, "votado": voto.vencedor.titulo})
+      self.__tela_votacao.mostra_voto({"votante": voto.votante.nome, "categoria": voto.categoria.nome, "votado": voto.votado.titulo})
 
   def excluir_voto(self):
     self.lista_votos()
@@ -42,14 +42,35 @@ class ControladorVotacao():
     else:
       self.__tela_votacao.mostra_mensagem("ATENCAO: Voto não existente")
 
-  def mostra_vencedores(self):
-    pass
+  def mostra_vencedor_por_categoria(self):
+    dict = {}
+    self.__controlador_sistema.controlador_categoria.listar_categorias()
+    categoria_escolhida = self.__tela_votacao.pega_categoria()
+    for categoria in self.__controlador_sistema.controlador_categoria.categorias:
+      if categoria.nome == categoria_escolhida:
+        categoria_escolhida = categoria
+    
+    for indicado in categoria_escolhida.indicados:
+      dict[indicado.titulo] = 0
+      for voto in self.__votos:
+        if voto.categoria == categoria_escolhida and voto.votado == indicado:
+          dict[indicado.titulo] += 1
+    
+    vencedor = ''
+    num_votos_vencedor = 0
+    for filme in dict:
+      if dict[filme] > num_votos_vencedor:
+        vencedor = filme
+        num_votos_vencedor = dict[filme]
+    print("----------VENCEDOR----------")
+    print(f"Vencedor: {vencedor}")
+    print("")
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_voto, 2: self.lista_votos, 3: self.excluir_voto, 4: self.mostra_vencedores, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_voto, 2: self.lista_votos, 3: self.excluir_voto, 4: self.mostra_vencedor_por_categoria, 0: self.retornar}
 
     continua = True
     while continua:

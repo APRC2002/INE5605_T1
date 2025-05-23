@@ -28,6 +28,11 @@ class TelaVotacao():
     print(f"VENCEDOR: {dados_voto["votado"]}")
     print("\n")
 
+  def pega_categoria(self):
+    print("---ESCOLHA A CATEGORIA---")
+    categoria = input("Categoria: ")
+    return categoria
+  
   #BLZ
   def seleciona_voto(self):
     id_voto = input("TID do votante: ")
