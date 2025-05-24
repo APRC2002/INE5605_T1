@@ -77,5 +77,5 @@ class ControladorFilme():
 
   def inclui_categoria(self, filme, categoria):
     for f in self.__filmes:
-      if f.titulo == filme:
+      if f.titulo == filme and categoria not in f.categorias:
         f.adiciona_categoria(categoria)

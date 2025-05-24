@@ -62,9 +62,9 @@ class ControladorVotacao():
       if dict[filme] > num_votos_vencedor:
         vencedor = filme
         num_votos_vencedor = dict[filme]
-    print("----------VENCEDOR----------")
-    print(f"Vencedor: {vencedor}")
-    print("")
+    self.__tela_votacao.mostra_mensagem("----------VENCEDOR----------")
+    self.__tela_votacao.mostra_mensagem(f"Vencedor: {vencedor}")
+    self.__tela_votacao.mostra_mensagem("")
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
