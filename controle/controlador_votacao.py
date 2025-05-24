@@ -19,7 +19,11 @@ class ControladorVotacao():
     membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
     categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
     votado = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
-    if (membro_academia is not None and categoria is not None):
+    voto_repetido = False
+    for v in self.__votos:
+      if v.categoria == categoria and v.votante == membro_academia:
+        voto_repetido = True
+    if (membro_academia is not None and categoria is not None and not voto_repetido):
       if categoria in votado.categorias:
         voto = Voto(membro_academia, categoria, votado)
         self.__votos.append(voto)
