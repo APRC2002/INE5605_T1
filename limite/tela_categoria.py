@@ -13,13 +13,15 @@ class TelaCategoria():
     print("0 - Retornar")
 
     opcao = int(input("Escolha a opcao: "))
+    print("")
     return opcao
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def pega_nome(self):
+    #print("")
     print("-------- NOME DA CATEGORIA ----------")
     nome = input("Nome: ")
-
+    print("")
     return nome
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
@@ -31,9 +33,10 @@ class TelaCategoria():
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def mostra_categoria(self, dados_categoria):
+    print("")
     print("NOME DA CATEGORIA: ", dados_categoria["nome"])
     print("INDICADOS DA CATEGORIA: ", dados_categoria["indicados"])
-    print("\n")
+    print("")
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def seleciona_categoria(self):

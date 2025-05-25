@@ -52,11 +52,14 @@ class ControladorCategoria():
     pass
 
   def listar_categorias(self):
+    self.__tela_categoria.mostra_mensagem("----------------CATEGORIAS CADASTRADAS----------------")
     for c in self.__categorias:
       indicados = []
       for indicado in c.indicados:
         indicados.append(indicado.titulo)
       self.__tela_categoria.mostra_categoria({"nome": c.nome, "indicados": indicados})
+    self.__tela_categoria.mostra_mensagem("------------------------------------------------------")
+    self.__tela_categoria.mostra_mensagem("")
 
   def excluir_categoria(self):
     pass
@@ -70,75 +73,3 @@ class ControladorCategoria():
     continua = True
     while continua:
       lista_opcoes[self.__tela_categoria.tela_opcoes()]()
-
-"""
-
-
-
-
-
-
-
-  def alterar_categoria(self):
-    self.lista_categorias()
-    nome_categoria = self.__tela_categoria.seleciona_categoria()
-    categoria = self.pega_categoria(nome_categoria)
-
-    if(categoria is not None):
-      novo_nome = self.__tela_categoria.pega_nome()
-      categoria.nome = novo_nome
-      self.lista_categorias()
-    else:
-      self.__tela_categoria.mostra_mensagem("ATENCAO: Categoria não existente")
-
-  def adicionar_indicados(self):
-    self.lista_categorias()
-    nome_categoria = self.__tela_categoria.seleciona_categoria()
-    categoria = self.pega_categoria(nome_categoria)
-
-    if(categoria is not None):
-      novos_indicados = self.__tela_categoria.pega_indicados().split(",")
-      for indicado in novos_indicados:
-        categoria.inclui_indicados(indicado)
-    else:
-      self.__tela_categoria.mostra_mensagem("ATENCAO: Categoria não existente")
-
-  def remover_indicados(self):
-    self.lista_categorias()
-    nome_categoria = self.__tela_categoria.seleciona_categoria()
-    categoria = self.pega_categoria(nome_categoria)
-
-    if(categoria is not None):
-      indicados_removidos = self.__tela_categoria.pega_indicados().split(",")
-      categoria.remove_indicados(indicados_removidos)
-    else:
-      self.__tela_categoria.mostra_mensagem("ATENCAO: Categoria não existente")
-
-  def alterar_indicados(self):
-    self.lista_categorias()
-    nome_categoria = self.__tela_categoria.seleciona_categoria()
-    categoria = self.pega_categoria(nome_categoria)
-
-    if(categoria is not None):
-      novos_indicados = self.__tela_categoria.pega_indicados().split(",") # oque acontece com esse .split() se o input for de um candidato só?????????
-      categoria.set_indicados(novos_indicados)
-      self.lista_categorias()
-    else:
-      self.__tela_categoria.mostra_mensagem("ATENCAO: Categoria não existente")
-
-  # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
-  def lista_categorias(self):
-    for categoria in self.__categorias:
-      self.__tela_categoria.mostra_categoria({"nome": categoria.nome, "indicados": categoria.indicados})
-
-  def excluir_categoria(self):
-    self.lista_categorias()
-    nome_categoria = self.__tela_categoria.seleciona_categoria()
-    categoria = self.pega_categoria(nome_categoria)
-
-    if(categoria is not None):
-      self.__categorias.remove(categoria)
-      self.lista_categorias()
-    else:
-      self.__tela_categoria.mostra_mensagem("ATENCAO: Categoria não existente")
-"""

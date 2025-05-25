@@ -1,7 +1,6 @@
 
 class TelaFilme():
   def tela_opcoes(self):
-    print("")
     print("-------- FILMES  ----------")
     print("Escolha a opcao")
     print("1 - Incluir Filme")
