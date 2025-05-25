@@ -35,9 +35,8 @@ class ControladorAtor():
     ator = self.pega_ator_por_id(id_ator)
 
     if(ator is not None):
-      novos_dados_ator = self.__tela_ator.pega_dados_ator()
+      novos_dados_ator = self.__tela_ator.pega_dados_ator(ator.genero)
       ator.nome = novos_dados_ator["nome"]
-      ator.id = novos_dados_ator["id"]
       ator.data_de_nascimento = novos_dados_ator["data_de_nascimento"]
       ator.nacionalidade = novos_dados_ator["nacionalidade"]
       ator.genero = novos_dados_ator["genero"]
@@ -47,10 +46,14 @@ class ControladorAtor():
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_atores(self):
+    self.__tela_ator.mostra_mensagem("")
+    self.__tela_ator.mostra_mensagem("-------------------ATORES CADASTRADOS-------------------")
     for ator in self.__atores:
       self.__tela_ator.mostra_ator({"nome": ator.nome, "id": ator.id, "data_de_nascimento": ator.data_de_nascimento, "nacionalidade": ator.nacionalidade, "genero": ator.genero})
     if len(self.__atores) == 0:
       print("Não há atores cadastrados")
+    self.__tela_ator.mostra_mensagem("--------------------------------------------------------")
+    self.__tela_ator.mostra_mensagem("")
 
   def excluir_ator(self):
     self.lista_atores()

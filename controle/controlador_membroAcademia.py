@@ -1,16 +1,26 @@
 from limite.tela_membroAcademia import TelaMembroAcademia
 from entidade.membroAcademia import MembroAcademia
+import time
+
+def current_milli_time():
+  return round(time.time() * 10)
+
+def cria_id():
+  return str(current_milli_time() - 17481983713)
+
 
 class ControladorMembroAcademia():
 
   def __init__(self, controlador_sistema):
     self.__membrosAcademia = []
+    """
     membro = MembroAcademia("123", "Membro1", 123, "BR")
     self.__membrosAcademia.append(membro)
     membro = MembroAcademia("234", "Membro2", 123, "BR")
     self.__membrosAcademia.append(membro)
     membro = MembroAcademia("345", "Membro3", 123, "BR")
     self.__membrosAcademia.append(membro)
+    """
     self.__tela_membroAcademia = TelaMembroAcademia()
     self.__controlador_sistema = controlador_sistema
 
@@ -23,7 +33,7 @@ class ControladorMembroAcademia():
   # Sugestão: não deixe cadastrar dois membrosAcademia com o mesmo  ID
   def incluir_membroAcademia(self):
     dados_membroAcademia = self.__tela_membroAcademia.pega_dados_membroAcademia()
-    membroAcademia = MembroAcademia(dados_membroAcademia["id"], dados_membroAcademia["nome"], dados_membroAcademia["data_de_nascimento"], dados_membroAcademia["nacionalidade"])
+    membroAcademia = MembroAcademia(cria_id(), dados_membroAcademia["nome"], dados_membroAcademia["data_de_nascimento"], dados_membroAcademia["nacionalidade"])
     self.__membrosAcademia.append(membroAcademia)
 
   def alterar_membro(self):
@@ -35,7 +45,6 @@ class ControladorMembroAcademia():
       novos_dados_membroAcademia = self.__tela_membroAcademia.pega_dados_membroAcademia()
       membroAcademia.nome = novos_dados_membroAcademia["nome"]
       membroAcademia.nacionalidade = novos_dados_membroAcademia["nacionalidade"]
-      membroAcademia.id = novos_dados_membroAcademia["id"]
       membroAcademia.data_de_nascimento = novos_dados_membroAcademia["data_de_nascimento"]
       self.lista_membrosAcademia()
     else:

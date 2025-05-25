@@ -19,12 +19,11 @@ class TelaMembroAcademia():
   def pega_dados_membroAcademia(self):
     print("-------- DADOS MEMBROS ACADEMIA ----------")
     nome = input("Nome: ")
-    id = input("ID: ")
     nacionalidade = input("Nacionalidade: ")
     data_de_nascimento = input("Data de nascimento: ")
     print('')
 
-    return {"nome": nome,  "id": id, "nacionalidade": nacionalidade, "data_de_nascimento": data_de_nascimento}
+    return {"nome": nome, "nacionalidade": nacionalidade, "data_de_nascimento": data_de_nascimento}
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def mostra_membroAcademia(self, dados_membroAcademia):
