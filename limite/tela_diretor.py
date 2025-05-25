@@ -14,13 +14,12 @@ class TelaDiretor():
   def pega_dados_diretor(self):
     print("")
     print("-------- DADOS DIRETOR ----------")
-    id = input("id: ")
     nome = input("nome: ")
     data_de_nascimento = input("data de nascimento: ")
     nacionalidade = input("nacionalidade: ")
     
 
-    return {"id": id, "nome": nome, "data_de_nascimento": data_de_nascimento, "nacionalidade": nacionalidade}
+    return {"nome": nome, "data_de_nascimento": data_de_nascimento, "nacionalidade": nacionalidade}
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def mostra_diretor(self, dados_diretor):

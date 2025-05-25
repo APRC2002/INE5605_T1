@@ -3,6 +3,13 @@ from limite.tela_filme import TelaFilme
 from entidade.filme import Filme
 from entidade.diretor import Diretor
 from entidade.ator import Ator
+import time
+
+def current_milli_time():
+  return round(time.time() * 10)
+
+def cria_id():
+  return str(current_milli_time() - 17481983713)
 
 
 class ControladorFilme():
@@ -20,9 +27,9 @@ class ControladorFilme():
 
   def incluir_filme(self):
     titulo = self.__tela_filme.pega_titulo_filme()
-    diretor = self.__controlador_sistema.controlador_diretor.incluir_diretor()
-    ator = self.__controlador_sistema.controlador_ator.incluir_ator("M")
-    atriz = self.__controlador_sistema.controlador_ator.incluir_ator("F")
+    diretor = self.__controlador_sistema.controlador_diretor.incluir_diretor(cria_id())
+    ator = self.__controlador_sistema.controlador_ator.incluir_ator("M", cria_id())
+    atriz = self.__controlador_sistema.controlador_ator.incluir_ator("F", cria_id())
     filme = Filme(titulo, diretor, ator, atriz)
     self.__filmes.append(filme)
 

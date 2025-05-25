@@ -19,11 +19,11 @@ class ControladorDiretor():
         return diretor
     return None
 
-  def incluir_diretor(self):
+  def incluir_diretor(self, id):
     dados_diretor = self.__tela_diretor.pega_dados_diretor()
-    l = self.pega_diretor_por_id(dados_diretor["id"])
+    l = self.pega_diretor_por_id(id)
     if l is None:
-      diretor = Diretor(dados_diretor["id"], dados_diretor["nome"], dados_diretor["data_de_nascimento"], dados_diretor["nacionalidade"])
+      diretor = Diretor(id, dados_diretor["nome"], dados_diretor["data_de_nascimento"], dados_diretor["nacionalidade"])
       self.__diretores.append(diretor)
       return diretor
     else:
