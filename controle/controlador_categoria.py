@@ -25,8 +25,15 @@ class ControladorCategoria():
   # Sugestão: não deixe cadastrar duas categorias com o mesmo nome
   def incluir_categoria(self):
     nome_categoria = self.__tela_categoria.pega_nome()
-    categoria = Categoria(nome_categoria)
-    self.__categorias.append(categoria)
+    categoria = None
+    for c in self.__categorias:
+      if c.nome == nome_categoria:
+        categoria = c
+    if categoria == None:
+      categoria = Categoria(nome_categoria)
+      self.__categorias.append(categoria)
+    else:
+      self.__tela_categoria.mostra_mensagem("AVISO: Já há uma categoria cadastrada com esse nome")
 
   def alterar_nome_categoria(self):
     self.listar_categorias()
@@ -42,11 +49,18 @@ class ControladorCategoria():
     for c in self.__categorias:
       if c.nome == nome_categoria:
         categoria = c
-    self.__controlador_sistema.controlador_filme.lista_filmes()
-    titulo_indicado = self.__tela_categoria.pega_indicado()
-    indicado = self.__controlador_sistema.controlador_filme.retorna_filme(titulo_indicado)
-    categoria.inclui_indicado(indicado)
-    self.__controlador_sistema.controlador_filme.inclui_categoria(titulo_indicado, categoria)
+
+    if len(categoria.indicados) < 5:
+      self.__controlador_sistema.controlador_filme.lista_filmes()
+      titulo_indicado = self.__tela_categoria.pega_indicado()
+      indicado = self.__controlador_sistema.controlador_filme.retorna_filme(titulo_indicado)
+      if indicado not in categoria.indicados:
+        categoria.inclui_indicado(indicado)
+        self.__controlador_sistema.controlador_filme.inclui_categoria(titulo_indicado, categoria)
+      else:
+        self.__tela_categoria.mostra_mensagem("AVISO: Esse filme já foi indicado")
+    else:
+      self.__tela_categoria.mostra_mensagem("AVISO: Esta categoria já possui o número máximo de indicados")
 
   def remover_indicado(self):
     pass
