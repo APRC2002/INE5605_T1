@@ -29,8 +29,8 @@ class ControladorAtor():
         
         if not dados_ator["nome"].strip():
             raise NomeVazioException(dados_ator["nome"])
-        
-        if dados_ator["genero"].upper() not in ("M" or "F"):
+
+        if dados_ator["genero"].upper() not in ("M", "F"):
            raise GeneroInvalidoException(dados_ator["genero"])
         
         ator_existente = self.pega_ator_por_id(id)
@@ -87,7 +87,7 @@ class ControladorAtor():
     except Exception as e:
         self.__tela_ator.mostra_mensagem(f"Error inesperado: {e}")
 
-  # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
+
   def lista_atores(self):
     self.__tela_ator.mostra_mensagem("")
     self.__tela_ator.mostra_mensagem("-------------------ATORES CADASTRADOS-------------------")
