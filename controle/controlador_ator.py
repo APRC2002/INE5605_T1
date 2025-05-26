@@ -1,6 +1,8 @@
 from limite.tela_ator import TelaAtor
 from entidade.ator import Ator
 from exceptions.stringInvalida import NomeVazioException
+from exceptions.generoInvalidoException import GeneroInvalidoException
+
 
 
 class ControladorAtor():
@@ -28,6 +30,9 @@ class ControladorAtor():
         if not dados_ator["nome"].strip():
             raise NomeVazioException(dados_ator["nome"])
         
+        if dados_ator["genero"].upper() not in ("M" or "F"):
+           raise GeneroInvalidoException(dados_ator["genero"])
+        
         ator_existente = self.pega_ator_por_id(id)
         if ator_existente is not None:
             self.__tela_ator.mostra_mensagem("ATENÇÃO: Ator já existente")
@@ -45,6 +50,9 @@ class ControladorAtor():
         return novo_ator
         
     except NomeVazioException as e:
+        self.__tela_ator.mostra_mensagem(f"ERRO: {e}")
+        return None
+    except GeneroInvalidoException as e:
         self.__tela_ator.mostra_mensagem(f"ERRO: {e}")
         return None
     except Exception as e:
