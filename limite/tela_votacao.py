@@ -38,7 +38,7 @@ class TelaVotacao():
     #print(f"ID DO VOTO: {dados_voto['id']}")
     print(f"MEMBRO: {dados_voto['votante']}")
     print(f"CATEGORIA: {dados_voto['categoria']}")
-    print(f"VENCEDOR: {dados_voto["votado"]}")
+    print(f"VENCEDOR: {dados_voto['votado']}")
     print("\n")
 
   def pega_categoria(self):
