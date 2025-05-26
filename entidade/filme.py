@@ -61,3 +61,6 @@ class Filme:
 
     def adiciona_categoria(self, categoria):
         self.__categorias.append(categoria)
+    
+    def troca_titulo(self, titulo):
+        self.__titulo = titulo

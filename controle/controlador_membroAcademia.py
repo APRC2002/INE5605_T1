@@ -30,7 +30,6 @@ class ControladorMembroAcademia():
         return membro
     return None
 
-  # Sugestão: não deixe cadastrar dois membrosAcademia com o mesmo  ID
   def incluir_membroAcademia(self):
     dados_membroAcademia = self.__tela_membroAcademia.pega_dados_membroAcademia()
     membroAcademia = MembroAcademia(cria_id(), dados_membroAcademia["nome"], dados_membroAcademia["data_de_nascimento"], dados_membroAcademia["nacionalidade"])
@@ -52,6 +51,10 @@ class ControladorMembroAcademia():
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_membrosAcademia(self):
+    self.__tela_membroAcademia.mostra_mensagem("--------------MEMBROS DA ACADEMIA--------------")
+
+    if len(self.__membrosAcademia) == 0:
+      self.__tela_membroAcademia.mostra_mensagem("Aviso: Não há membros cadastrados")
     for membro in self.__membrosAcademia:
       self.__tela_membroAcademia.mostra_membroAcademia({"nome": membro.nome, "ID": membro.id, "nacionalidade": membro.nacionalidade, "data_de_nascimento": membro.data_de_nascimento})
 

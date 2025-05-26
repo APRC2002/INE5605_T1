@@ -65,13 +65,21 @@ class ControladorFilme():
       self.lista_filmes()
     else:
       self.__tela_filme.mostra_mensagem("ATENÇÃO: filme não existente")
+  
+  def alterar_titulo(self):
+    self.lista_filmes()
+    titulo_filme = self.__tela_filme.seleciona_filme()
+    filme = self.pega_filme_por_nome(titulo_filme)
+    if (filme is not None):
+      titulo = self.__tela_filme.pega_titulo_filme()
+      filme.troca_titulo(titulo)
+
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_filme, 2: self.lista_filmes, 3:
-                    self.excluir_filme,0: self.retornar}
+    lista_opcoes = {1: self.incluir_filme, 2: self.lista_filmes, 3: self.excluir_filme, 4: self.alterar_titulo, 0: self.retornar}
     
     continua = True
     while continua:
