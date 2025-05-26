@@ -1,5 +1,7 @@
 from limite.tela_diretor import TelaDiretor
 from entidade.diretor import Diretor
+from exceptions.stringInvalida import NomeVazioException
+
 
 class ControladorDiretor():
 
@@ -20,31 +22,62 @@ class ControladorDiretor():
     return None
 
   def incluir_diretor(self, id):
-    dados_diretor = self.__tela_diretor.pega_dados_diretor()
-    l = self.pega_diretor_por_id(id)
-    if l is None:
-      diretor = Diretor(id, dados_diretor["nome"], dados_diretor["data_de_nascimento"], dados_diretor["nacionalidade"])
-      self.__diretores.append(diretor)
-      return diretor
-    else:
-      self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor já existente")
-
+    try:
+        dados_diretor = self.__tela_diretor.pega_dados_diretor()
+        
+        if not dados_diretor["nome"].strip():
+            raise NomeVazioException(dados_diretor["nome"])
+        
+        diretor_existente = self.pega_diretor_por_id(id)
+        if diretor_existente is not None:
+            self.__tela_diretor.mostra_mensagem("ATENÇÃO: Diretor já existente")
+            return None
+        
+        novo_diretor = Diretor(
+            id,
+            dados_diretor["nome"],
+            dados_diretor["data_de_nascimento"],
+            dados_diretor["nacionalidade"]
+        )
+        self.__diretores.append(novo_diretor)
+        self.__tela_diretor.mostra_mensagem("Diretor cadastrado com sucesso!")
+        return novo_diretor
+        
+    except NomeVazioException as e:
+        self.__tela_diretor.mostra_mensagem(f"ERRO: {e}")
+        return None
+    except Exception as e:
+        self.__tela_diretor.mostra_mensagem(f"Erro inesperado: {e}")
+        return None
   def alterar_diretor(self):
-    self.lista_diretores()
-    id_diretor = self.__tela_diretor.seleciona_diretor()
-    diretor = self.pega_diretor_por_id(id_diretor)
+    try:
+        self.lista_diretores()
+        id_diretor = self.__tela_diretor.seleciona_diretor()
+        diretor = self.pega_diretor_por_id(id_diretor)
 
-    if(diretor is not None):
-      novos_dados_diretor = self.__tela_diretor.pega_dados_diretor()
-      diretor.id = novos_dados_diretor["id"]
-      diretor.nome = novos_dados_diretor["nome"]
-      diretor.data_de_nascimento = novos_dados_diretor["data_de_nascimento"]
-      diretor.nacionalidade = novos_dados_diretor["nacionalidade"]
-      self.lista_diretores()
-    else:
-      self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor não existente")
+        if diretor is None:
+            self.__tela_diretor.mostra_mensagem("ATENÇÃO: Diretor não encontrado.")
+            return
 
-  # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
+        novos_dados_diretor = self.__tela_diretor.pega_dados_diretor()
+        
+        if not novos_dados_diretor["nome"].strip():
+            raise NomeVazioException(novos_dados_diretor["nome"])
+
+        diretor.id = novos_dados_diretor["id"]
+        diretor.nome = novos_dados_diretor["nome"]
+        diretor.data_de_nascimento = novos_dados_diretor["data_de_nascimento"]
+        diretor.nacionalidade = novos_dados_diretor["nacionalidade"]
+
+        self.lista_diretores()
+        self.__tela_diretor.mostra_mensagem("Diretor atualizado com sucesso!")
+
+    except NomeVazioException as e:
+        self.__tela_diretor.mostra_mensagem(f"ERRO: {e}")
+    except Exception as e:
+        self.__tela_diretor.mostra_mensagem(f"Erro inesperado: {e}")
+
+
   def lista_diretores(self):
     for diretor in self.__diretores:
       self.__tela_diretor.mostra_diretor({"id": diretor.id, "nome": diretor.nome, "data_de_nascimento": diretor.data_de_nascimento, "nacionalidade": diretor.nacionalidade})
