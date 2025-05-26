@@ -1,4 +1,4 @@
-class stringInvalida(Exception):
-    def __init__(self, string):
-        self.mensagem = 'A string {} não é váliida pois está vazia.'
-        super().__init__(self.mensagem.format(string))
+class NomeVazioException(Exception):
+    def __init__(self, nome):
+        self.mensagem = 'O nome "{}" não é valido pois está vazio.'
+        super().__init__(self.mensagem.format(nome))
