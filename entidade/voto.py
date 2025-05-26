@@ -4,11 +4,11 @@ from entidade.filme import Filme
 from entidade.categoria import Categoria
 
 class Voto:
-    def __init__(self, votante: MembroAcademia, categoria: Categoria, vencedor: Filme | MembroAcademia):
+    def __init__(self, votante: MembroAcademia, categoria: Categoria, votado: Filme):
         if isinstance(votante, MembroAcademia):
             self.__votante = votante
-        if isinstance(vencedor, MembroAcademia) or isinstance(vencedor, Filme):
-            self.__vencedor = vencedor
+        if isinstance(votado, MembroAcademia) or isinstance(votado, Filme):
+            self.__votado = votado
         if isinstance(categoria, Categoria):
             self.__categoria = categoria
     
@@ -32,9 +32,9 @@ class Voto:
 
     @property
     def votado(self)-> Filme | MembroAcademia:
-        return self.__vencedor
+        return self.__votado
     
     @votado.setter
-    def votado(self, vencedor: Filme | MembroAcademia):
-        if isinstance(vencedor, MembroAcademia) or isinstance(vencedor, Filme):
-            self.__vencedor = vencedor
+    def votado(self, votado: Filme | MembroAcademia):
+        if isinstance(votado, MembroAcademia) or isinstance(votado, Filme):
+            self.__votado = votado

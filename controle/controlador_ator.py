@@ -51,7 +51,7 @@ class ControladorAtor():
     for ator in self.__atores:
       self.__tela_ator.mostra_ator({"nome": ator.nome, "id": ator.id, "data_de_nascimento": ator.data_de_nascimento, "nacionalidade": ator.nacionalidade, "genero": ator.genero})
     if len(self.__atores) == 0:
-      print("Não há atores cadastrados")
+      self.__tela_ator.mostra_mensagem("Não há atores cadastrados")
     self.__tela_ator.mostra_mensagem("--------------------------------------------------------")
     self.__tela_ator.mostra_mensagem("")
 

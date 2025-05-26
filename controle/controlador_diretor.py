@@ -49,7 +49,7 @@ class ControladorDiretor():
     for diretor in self.__diretores:
       self.__tela_diretor.mostra_diretor({"id": diretor.id, "nome": diretor.nome, "data_de_nascimento": diretor.data_de_nascimento, "nacionalidade": diretor.nacionalidade})
     if len(self.__diretores) == 0:
-      print("Não há diretores cadastrados")
+      self.__tela_diretor.mostra_mensagem("Não há diretores cadastrados")
 
   def excluir_diretor(self):
     self.lista_diretores()
