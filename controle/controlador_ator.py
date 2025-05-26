@@ -1,5 +1,7 @@
 from limite.tela_ator import TelaAtor
 from entidade.ator import Ator
+from exceptions.stringInvalida import NomeVazioException
+
 
 class ControladorAtor():
 
@@ -20,29 +22,62 @@ class ControladorAtor():
     return None
 
   def incluir_ator(self, genero, id):
-    dados_ator = self.__tela_ator.pega_dados_ator(genero)
-    a = self.pega_ator_por_id(id)
-    if a is None:
-      ator = Ator(id, dados_ator["nome"], dados_ator["data_de_nascimento"], dados_ator["nacionalidade"], dados_ator["genero"])
-      self.__atores.append(ator)
-      return ator
-    else:
-      self.__tela_ator.mostra_mensagem("ATENCAO: Ator já existente")
-
+    try:
+        dados_ator = self.__tela_ator.pega_dados_ator(genero)
+        
+        if not dados_ator["nome"].strip():
+            raise NomeVazioException(dados_ator["nome"])
+        
+        ator_existente = self.pega_ator_por_id(id)
+        if ator_existente is not None:
+            self.__tela_ator.mostra_mensagem("ATENÇÃO: Ator já existente")
+            return None
+        
+        novo_ator = Ator(
+            id,
+            dados_ator["nome"],
+            dados_ator["data_de_nascimento"],
+            dados_ator["nacionalidade"],
+            dados_ator["genero"]
+        )
+        self.__atores.append(novo_ator)
+        self.__tela_ator.mostra_mensagem("Ator cadastrado com sucesso!")
+        return novo_ator
+        
+    except NomeVazioException as e:
+        self.__tela_ator.mostra_mensagem(f"ERRO: {e}")
+        return None
+    except Exception as e:
+        self.__tela_ator.mostra_mensagem(f"Erro inesperado: {e}")
+        return None
+    
   def alterar_ator(self):
-    self.lista_atores()
-    id_ator = self.__tela_ator.seleciona_ator()
-    ator = self.pega_ator_por_id(id_ator)
+    try:
+        self.lista_atores()
+        id_ator = self.__tela_ator.seleciona_ator()
+        ator = self.pega_ator_por_id(id_ator)
 
-    if(ator is not None):
-      novos_dados_ator = self.__tela_ator.pega_dados_ator(ator.genero)
-      ator.nome = novos_dados_ator["nome"]
-      ator.data_de_nascimento = novos_dados_ator["data_de_nascimento"]
-      ator.nacionalidade = novos_dados_ator["nacionalidade"]
-      ator.genero = novos_dados_ator["genero"]
-      self.lista_atores()
-    else:
-      self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
+        if ator is None:
+            self.__tela_ator.mostra_mensagem("ATENÇÃO: Ator não encontrado.")
+            return
+
+        novos_dados_ator = self.__tela_ator.pega_dados_ator(ator.genero)
+        
+        if not novos_dados_ator["nome"].strip():
+            raise NomeVazioException(novos_dados_ator["nome"])
+
+        ator.nome = novos_dados_ator["nome"]
+        ator.data_de_nascimento = novos_dados_ator["data_de_nascimento"]
+        ator.nacionalidade = novos_dados_ator["nacionalidade"]
+        ator.genero = novos_dados_ator["genero"]
+
+        self.lista_atores()
+        self.__tela_ator.mostra_mensagem("Ator atualizado com sucesso!")
+
+    except NomeVazioException as e:
+        self.__tela_ator.mostra_mensagem(f"ERROR: {e}")
+    except Exception as e:
+        self.__tela_ator.mostra_mensagem(f"Error inesperado: {e}")
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_atores(self):
