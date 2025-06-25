@@ -1,55 +1,106 @@
+import PySimpleGUI as sg
 
 class TelaVotacao():
-  def tela_opcoes(self):
-    print("-------- VOTACAO  ----------")
-    print("Escolha a opcao")
-    print("1 - Incluir Voto")
-    print("2 - Listar Votos")
-    print("3 - Excluir Voto")
-    print("4 - Visualizar vencedores")
-    print("0 - Retornar")
+    def __init__(self):
+        self.__window = None
+        self.init_opcoes()
 
-    opcao = self.le_num_inteiro("Escolha uma opção:", [0, 1, 2, 3, 4])
-    return opcao
+    def tela_opcoes(self):
+        self.init_opcoes()
+        button, values = self.open()
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        if values['3']:
+            opcao = 3
+        if values['4']:
+            opcao = 4
+        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
+        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
+        return opcao
 
-  def le_num_inteiro(self, mensagem=" ", ints_validos = None):
-        while True:
-            valor_lido = input(mensagem)
-            try:
-                valor_int = int(valor_lido)
-                if ints_validos and valor_int not in ints_validos:
-                    raise ValueError
-                return valor_int
-            except ValueError:
-                print("Valor inválido!")
-                if ints_validos:
-                    print("Valores válidos: ", ints_validos)
+    def init_opcoes(self):
+        #sg.theme_previewer()
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- VOTACAO ----------', font=("Helvica", 25))],
+            [sg.Text('Escolha sua opção', font=("Helvica", 15))],
+            [sg.Radio('Incluir Voto', "RD1", key='1')],
+            [sg.Radio('Listar Votos', "RD1", key='2')],
+            [sg.Radio('Excluir Voto', "RD1", key='3')],
+            [sg.Radio('Visualizar vencedores', "RD1", key='4')],
+            [sg.Radio('Retornar', "RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Sistema de Votação').Layout(layout)
 
-  def pega_dados_voto(self):
-    print("-------- DADOS DO VOTO ----------")
-    id_membro = input("ID do votante: ")
-    nome_categoria = input("Nome da Categoria: ")
-    votado = input("Vencedor: ")
-    return {"id": id_membro, "nome": nome_categoria, "votado": votado}
+    def pega_dados_voto(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- DADOS DO VOTO ----------', font=("Helvica", 25))],
+            [sg.Text('ID do votante:', size=(15, 1)), sg.InputText('', key='id')],
+            [sg.Text('Nome da Categoria:', size=(15, 1)), sg.InputText('', key='nome')],
+            [sg.Text('Vencedor:', size=(15, 1)), sg.InputText('', key='votado')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Dados do Voto').Layout(layout)
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def mostra_voto(self, dados_voto):
-    print("\n-------- DETALHES DO VOTO ----------")
-    #print(f"ID DO VOTO: {dados_voto['id']}")
-    print(f"MEMBRO: {dados_voto['votante']}")
-    print(f"CATEGORIA: {dados_voto['categoria']}")
-    print(f"VENCEDOR: {dados_voto['votado']}")
-    print("\n")
+        button, values = self.open()
+        id_membro = values['id']
+        nome_categoria = values['nome']
+        votado = values['votado']
 
-  def pega_categoria(self):
-    print("---ESCOLHA A CATEGORIA---")
-    categoria = input("Categoria: ")
-    return categoria
-  
-  #BLZ
-  def seleciona_voto(self):
-    id_voto = input("TID do votante: ")
-    return id_voto
-  #BLZ
-  def mostra_mensagem(self, msg):
-    print(msg)
+        self.close()
+        return {"id": id_membro, "nome": nome_categoria, "votado": votado}
+
+    def mostra_voto(self, dados_voto):
+        string_voto = ""
+        string_voto = string_voto + "MEMBRO: " + dados_voto['votante'] + '\n'
+        string_voto = string_voto + "CATEGORIA: " + dados_voto['categoria'] + '\n'
+        string_voto = string_voto + "VENCEDOR: " + dados_voto['votado'] + '\n\n'
+
+        sg.Popup('-------- DETALHES DO VOTO ----------', string_voto)
+
+    def pega_categoria(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('---ESCOLHA A CATEGORIA---', font=("Helvica", 25))],
+            [sg.Text('Categoria:', size=(15, 1)), sg.InputText('', key='categoria')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Escolha a Categoria').Layout(layout)
+
+        button, values = self.open()
+        categoria = values['categoria']
+
+        self.close()
+        return categoria
+
+    def seleciona_voto(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- SELECIONAR VOTO ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o ID do votante que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('ID do votante:', size=(15, 1)), sg.InputText('', key='id_voto')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Seleciona voto').Layout(layout)
+
+        button, values = self.open()
+        id_voto = values['id_voto']
+        self.close()
+        return id_voto
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
+
+    def close(self):
+        self.__window.Close()
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
