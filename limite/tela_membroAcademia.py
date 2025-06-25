@@ -1,55 +1,92 @@
+import PySimpleGUI as sg
 
 class TelaMembroAcademia():
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def tela_opcoes(self):
-    print("-------- ACADEMIA ----------")
-    print("Escolha a opcao")
-    print("1 - Incluir Membro")
-    print("2 - Alterar Membro")
-    print("3 - Listar Membros")
-    print("4 - Excluir Membro")
-    print("0 - Retornar")
+    def __init__(self):
+        self.__window = None
+        self.init_opcoes()
 
-    opcao = self.le_num_inteiro("Escolha uma opção:", [0, 1, 2, 3, 4])
-    print("")
-    return opcao
+    def tela_opcoes(self):
+        self.init_opcoes()
+        button, values = self.open()
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        if values['3']:
+            opcao = 3
+        if values['4']:
+            opcao = 4
+        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
+        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
+        return opcao
 
-  def le_num_inteiro(self, mensagem=" ", ints_validos = None):
-        while True:
-            valor_lido = input(mensagem)
-            try:
-                valor_int = int(valor_lido)
-                if ints_validos and valor_int not in ints_validos:
-                    raise ValueError
-                return valor_int
-            except ValueError:
-                print("Valor inválido!")
-                if ints_validos:
-                    print("Valores válidos: ", ints_validos)
+    def init_opcoes(self):
+        #sg.theme_previewer()
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- ACADEMIA ----------', font=("Helvica", 25))],
+            [sg.Text('Escolha sua opção', font=("Helvica", 15))],
+            [sg.Radio('Incluir Membro', "RD1", key='1')],
+            [sg.Radio('Alterar Membro', "RD1", key='2')],
+            [sg.Radio('Listar Membros', "RD1", key='3')],
+            [sg.Radio('Excluir Membro', "RD1", key='4')],
+            [sg.Radio('Retornar', "RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Sistema de Academia').Layout(layout)
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def pega_dados_membroAcademia(self):
-    print("-------- DADOS MEMBROS ACADEMIA ----------")
-    nome = input("Nome: ")
-    nacionalidade = input("Nacionalidade: ")
-    data_de_nascimento = input("Data de nascimento: ")
-    print('')
+    def pega_dados_membroAcademia(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- DADOS MEMBROS ACADEMIA ----------', font=("Helvica", 25))],
+            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+            [sg.Text('Nacionalidade:', size=(15, 1)), sg.InputText('', key='nacionalidade')],
+            [sg.Text('Data de nascimento:', size=(15, 1)), sg.InputText('', key='data_de_nascimento')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Dados do Membro da Academia').Layout(layout)
 
-    return {"nome": nome, "nacionalidade": nacionalidade, "data_de_nascimento": data_de_nascimento}
+        button, values = self.open()
+        nome = values['nome']
+        nacionalidade = values['nacionalidade']
+        data_de_nascimento = values['data_de_nascimento']
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def mostra_membroAcademia(self, dados_membroAcademia):
-    print("NOME DO MEMBRO: ", dados_membroAcademia["nome"])
-    print("ID DO MEMBRO: ", dados_membroAcademia["ID"])
-    print("NACIONALIDADE DO MEMBRO: ", dados_membroAcademia["nacionalidade"])
-    print("DATA DE NASCIMENTO DO MEMBRO: ", dados_membroAcademia["data_de_nascimento"])
-    print("\n")
+        self.close()
+        return {"nome": nome, "nacionalidade": nacionalidade, "data_de_nascimento": data_de_nascimento}
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def seleciona_membroAcademia(self):
-    id = input("ID do membro que deseja selecionar: ")
-    return id
+    def mostra_membroAcademia(self, dados_membroAcademia):
+        string_membro = ""
+        string_membro = string_membro + "NOME DO MEMBRO: " + dados_membroAcademia["nome"] + '\n'
+        string_membro = string_membro + "ID DO MEMBRO: " + str(dados_membroAcademia["ID"]) + '\n'
+        string_membro = string_membro + "NACIONALIDADE DO MEMBRO: " + dados_membroAcademia["nacionalidade"] + '\n'
+        string_membro = string_membro + "DATA DE NASCIMENTO DO MEMBRO: " + dados_membroAcademia["data_de_nascimento"] + '\n\n'
 
-  def mostra_mensagem(self, msg):
-    print(msg)
-    print('')
+        sg.Popup('-------- DADOS DO MEMBRO DA ACADEMIA ----------', string_membro)
+
+    def seleciona_membroAcademia(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- SELECIONAR MEMBRO ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o ID do membro que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('ID:', size=(15, 1)), sg.InputText('', key='id')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Seleciona membro').Layout(layout)
+
+        button, values = self.open()
+        id = values['id']
+        self.close()
+        return id
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
+
+    def close(self):
+        self.__window.Close()
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
