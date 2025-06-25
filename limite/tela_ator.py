@@ -1,56 +1,93 @@
+import PySimpleGUI as sg
+
 class TelaAtor():
+    def __init__(self):
+        self.__window = None
+        self.init_opcoes()
 
-  def tela_opcoes(self):
-    print("-------- ATOR ----------")
-    print("Escolha a opcao")
-    print("1 - Alterar Ator")
-    print("2 - Listar Atores")
-    print("0 - Retornar")
+    def tela_opcoes(self):
+        self.init_opcoes()
+        button, values = self.open()
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
+        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
+        return opcao
 
-    opcao = self.le_num_inteiro("Escolha uma opção:", [0, 1, 2])
-    return opcao
+    def init_opcoes(self):
+        #sg.theme_previewer()
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- ATOR ----------', font=("Helvica", 25))],
+            [sg.Text('Escolha sua opção', font=("Helvica", 15))],
+            [sg.Radio('Alterar Ator', "RD1", key='1')],
+            [sg.Radio('Listar Atores', "RD1", key='2')],
+            [sg.Radio('Retornar', "RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Sistema de Atores').Layout(layout)
 
-  def le_num_inteiro(self, mensagem=" ", ints_validos = None):
-        while True:
-            valor_lido = input(mensagem)
-            try:
-                valor_int = int(valor_lido)
-                if ints_validos and valor_int not in ints_validos:
-                    raise ValueError
-                return valor_int
-            except ValueError:
-                print("Valor inválido!")
-                if ints_validos:
-                    print("Valores válidos: ", ints_validos)
+    def pega_dados_ator(self, genero_esperado):
+        sg.theme('DarkTeal4')
+        if genero_esperado == "M":
+            titulo = "-------- DADOS ATOR ----------"
+        elif genero_esperado == "F":
+            titulo = "-------- DADOS ATRIZ ----------"
+        
+        layout = [
+            [sg.Text(titulo, font=("Helvica", 25))],
+            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+            [sg.Text('Data de nascimento:', size=(15, 1)), sg.InputText('', key='data_de_nascimento')],
+            [sg.Text('Nacionalidade:', size=(15, 1)), sg.InputText('', key='nacionalidade')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Dados do Ator').Layout(layout)
 
-  def pega_dados_ator(self, genero_esperado):
-    print("")
-    if genero_esperado == "M":
-      print("-------- DADOS ATOR ----------")
-      nome = input("nome: ")
-      data_de_nascimento = input("data de nascimento: ")
-      nacionalidade = input("nacionalidade: ")
-      genero = "M"
-    elif genero_esperado == "F":
-      print("-------- DADOS ATRIZ ----------")
-      nome = input("nome: ")
-      data_de_nascimento = input("data de nascimento: ")
-      nacionalidade = input("nacionalidade: ")
-      genero = "F"
+        button, values = self.open()
+        nome = values['nome']
+        data_de_nascimento = values['data_de_nascimento']
+        nacionalidade = values['nacionalidade']
+        genero = genero_esperado
 
-    return {"nome": nome, "data_de_nascimento": data_de_nascimento, "nacionalidade": nacionalidade, "genero": genero}
+        self.close()
+        return {"nome": nome, "data_de_nascimento": data_de_nascimento, "nacionalidade": nacionalidade, "genero": genero}
 
-  def mostra_ator(self, dados_ator):
-    print("ID DO ATOR: ", dados_ator["id"])
-    print("NOME DO ATOR: ", dados_ator["nome"])
-    print("DATA DE NASCIMENTO DO ATOR: ", dados_ator["data_de_nascimento"])
-    print("NACIONALIDADE DO ATOR: ", dados_ator["nacionalidade"])
-    print("GENERO DO ATOR: ", dados_ator["genero"])
-    print("\n")
+    def mostra_ator(self, dados_ator):
+        string_ator = ""
+        string_ator = string_ator + "ID DO ATOR: " + str(dados_ator["id"]) + '\n'
+        string_ator = string_ator + "NOME DO ATOR: " + dados_ator["nome"] + '\n'
+        string_ator = string_ator + "DATA DE NASCIMENTO DO ATOR: " + dados_ator["data_de_nascimento"] + '\n'
+        string_ator = string_ator + "NACIONALIDADE DO ATOR: " + dados_ator["nacionalidade"] + '\n'
+        string_ator = string_ator + "GENERO DO ATOR: " + dados_ator["genero"] + '\n\n'
 
-  def seleciona_ator(self):
-    id = input("Id do ator que deseja selecionar: ")
-    return id
+        sg.Popup('-------- DADOS DO ATOR ----------', string_ator)
 
-  def mostra_mensagem(self, msg):
-    print(msg)
+    def seleciona_ator(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- SELECIONAR ATOR ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o ID do ator que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('ID:', size=(15, 1)), sg.InputText('', key='id')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Seleciona ator').Layout(layout)
+
+        button, values = self.open()
+        id = values['id']
+        self.close()
+        return id
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
+
+    def close(self):
+        self.__window.Close()
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
