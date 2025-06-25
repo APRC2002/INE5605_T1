@@ -1,60 +1,107 @@
+import PySimpleGUI as sg
 
 class TelaCategoria():
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def tela_opcoes(self):
-    print("-------- CATEGORIAS  ----------")
-    print("Escolha a opcao")
-    print("1 - Incluir Categoria")
-    print("2 - Alterar Nome")
-    print("3 - Adicionar Indicados")
-    print("4 - Remover Indicados")
-    print("5 - Listar Categorias")
-    print("6 - Excluir Categoria")
-    print("0 - Retornar")
+    def __init__(self):
+        self.__window = None
+        self.init_opcoes()
 
-    opcao = self.le_num_inteiro("Escolha uma opção:", [0, 1, 2, 3, 4, 5, 6])
-    print("")
-    return opcao
-  
-  def le_num_inteiro(self, mensagem=" ", ints_validos = None):
-        while True:
-            valor_lido = input(mensagem)
-            try:
-                valor_int = int(valor_lido)
-                if ints_validos and valor_int not in ints_validos:
-                    raise ValueError
-                return valor_int
-            except ValueError:
-                print("Valor inválido!")
-                if ints_validos:
-                    print("Valores válidos: ", ints_validos)
+    def tela_opcoes(self):
+        self.init_opcoes()
+        button, values = self.open()
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        if values['3']:
+            opcao = 3
+        if values['4']:
+            opcao = 4
+        if values['5']:
+            opcao = 5
+        if values['6']:
+            opcao = 6
+        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
+        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
+        return opcao
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def pega_nome(self):
-    #print("")
-    print("-------- NOME DA CATEGORIA ----------")
-    nome = input("Nome: ")
-    print("")
-    return nome
+    def init_opcoes(self):
+        #sg.theme_previewer()
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- CATEGORIAS ----------', font=("Helvica", 25))],
+            [sg.Text('Escolha sua opção', font=("Helvica", 15))],
+            [sg.Radio('Incluir Categoria', "RD1", key='1')],
+            [sg.Radio('Alterar Nome', "RD1", key='2')],
+            [sg.Radio('Adicionar Indicados', "RD1", key='3')],
+            [sg.Radio('Remover Indicados', "RD1", key='4')],
+            [sg.Radio('Listar Categorias', "RD1", key='5')],
+            [sg.Radio('Excluir Categoria', "RD1", key='6')],
+            [sg.Radio('Retornar', "RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Sistema de Categorias').Layout(layout)
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def pega_indicado(self):
-    print("-------- INDICADO NA CATEGORIA ----------")
-    indicado = input("Indicado: ")
+    def pega_nome(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- NOME DA CATEGORIA ----------', font=("Helvica", 25))],
+            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Nome da Categoria').Layout(layout)
 
-    return indicado
+        button, values = self.open()
+        nome = values['nome']
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def mostra_categoria(self, dados_categoria):
-    print("")
-    print("NOME DA CATEGORIA: ", dados_categoria["nome"])
-    print("INDICADOS DA CATEGORIA: ", dados_categoria["indicados"])
-    print("")
+        self.close()
+        return nome
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-  def seleciona_categoria(self):
-    nome = input("Nome da categoria que deseja selecionar: ")
-    return nome
+    def pega_indicado(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- INDICADO NA CATEGORIA ----------', font=("Helvica", 25))],
+            [sg.Text('Indicado:', size=(15, 1)), sg.InputText('', key='indicado')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Indicado na Categoria').Layout(layout)
 
-  def mostra_mensagem(self, msg):
-    print(msg)
+        button, values = self.open()
+        indicado = values['indicado']
+
+        self.close()
+        return indicado
+
+    def mostra_categoria(self, dados_categoria):
+        string_categoria = ""
+        string_categoria = string_categoria + "NOME DA CATEGORIA: " + dados_categoria["nome"] + '\n'
+        string_categoria = string_categoria + "INDICADOS DA CATEGORIA: " + str(dados_categoria["indicados"]) + '\n\n'
+
+        sg.Popup('-------- DADOS DA CATEGORIA ----------', string_categoria)
+
+    def seleciona_categoria(self):
+        sg.theme('DarkTeal4')
+        layout = [
+            [sg.Text('-------- SELECIONAR CATEGORIA ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o nome da categoria que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Seleciona categoria').Layout(layout)
+
+        button, values = self.open()
+        nome = values['nome']
+        self.close()
+        return nome
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
+
+    def close(self):
+        self.__window.Close()
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
