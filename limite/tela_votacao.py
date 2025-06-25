@@ -16,8 +16,8 @@ class TelaVotacao():
             opcao = 3
         if values['4']:
             opcao = 4
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['5']:
+            opcao = 5
         if values['0'] or button in (None, 'Cancelar'):
             opcao = 0
         self.close()
@@ -33,6 +33,7 @@ class TelaVotacao():
             [sg.Radio('Listar Votos', "RD1", key='2')],
             [sg.Radio('Excluir Voto', "RD1", key='3')],
             [sg.Radio('Visualizar vencedores', "RD1", key='4')],
+            [sg.Radio('Top 3 Filmes Vencedores', "RD1", key='5')],
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
