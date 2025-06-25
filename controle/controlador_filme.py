@@ -1,4 +1,3 @@
-
 from limite.tela_filme import TelaFilme
 from entidade.filme import Filme
 from entidade.diretor import Diretor
@@ -18,6 +17,10 @@ class ControladorFilme():
     self.__filmes = []
     self.__tela_filme = TelaFilme()
     self.__controlador_sistema = controlador_sistema
+
+  @property
+  def filmes(self):
+    return self.__filmes
 
   def pega_filme_por_nome(self, titulo: str):
     for filme in self.__filmes:

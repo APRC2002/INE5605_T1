@@ -24,6 +24,10 @@ class ControladorMembroAcademia():
     self.__tela_membroAcademia = TelaMembroAcademia()
     self.__controlador_sistema = controlador_sistema
 
+  @property
+  def membrosAcademia(self):
+    return self.__membrosAcademia
+
   def pega_membro_por_id(self, id: int):
     for membro in self.__membrosAcademia:
       if(membro.id == id):
