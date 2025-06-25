@@ -70,11 +70,45 @@ class ControladorVotacao():
     self.__tela_votacao.mostra_mensagem(f"Vencedor: {vencedor}")
     self.__tela_votacao.mostra_mensagem("")
 
+  def mostra_top_3_filmes_vencedores(self):
+    filmes_wins = {}
+    
+    for categoria in self.__controlador_sistema.controlador_categoria.categorias:
+      dict_votos = {}
+      for indicado in categoria.indicados:
+        dict_votos[indicado.titulo] = 0
+        for voto in self.__votos:
+          if voto.categoria == categoria and voto.votado == indicado:
+            dict_votos[indicado.titulo] += 1
+      
+      vencedor_categoria = ''
+      num_votos_vencedor = 0
+      for filme in dict_votos:
+        if dict_votos[filme] > num_votos_vencedor:
+          vencedor_categoria = filme
+          num_votos_vencedor = dict_votos[filme]
+      
+      if vencedor_categoria != '':
+        if vencedor_categoria in filmes_wins:
+          filmes_wins[vencedor_categoria] += 1
+        else:
+          filmes_wins[vencedor_categoria] = 1
+    
+    filmes_ordenados = sorted(filmes_wins.items(), key=lambda x: x[1], reverse=True)
+    
+    self.__tela_votacao.mostra_mensagem("----------TOP 3 FILMES VENCEDORES----------")
+    if len(filmes_ordenados) == 0:
+      self.__tela_votacao.mostra_mensagem("Não há filmes vencedores ainda")
+    else:
+      for i, (filme, wins) in enumerate(filmes_ordenados[:3], 1):
+        self.__tela_votacao.mostra_mensagem(f"{i}º Lugar: {filme} - {wins} categoria(s)")
+    self.__tela_votacao.mostra_mensagem("")
+
   def retornar(self):
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_voto, 2: self.lista_votos, 3: self.excluir_voto, 4: self.mostra_vencedor_por_categoria, 0: self.retornar}
+    lista_opcoes = {1: self.incluir_voto, 2: self.lista_votos, 3: self.excluir_voto, 4: self.mostra_vencedor_por_categoria, 5: self.mostra_top_3_filmes_vencedores, 0: self.retornar}
 
     continua = True
     while continua:
