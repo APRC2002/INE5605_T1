@@ -30,11 +30,31 @@ class ControladorFilme():
 
   def incluir_filme(self):
     titulo = self.__tela_filme.pega_titulo_filme()
-    diretor = self.__controlador_sistema.controlador_diretor.incluir_diretor(cria_id())
-    ator = self.__controlador_sistema.controlador_ator.incluir_ator("M", cria_id())
-    atriz = self.__controlador_sistema.controlador_ator.incluir_ator("F", cria_id())
-    filme = Filme(titulo, diretor, ator, atriz)
-    self.__filmes.append(filme)
+
+    diretor = None
+    while diretor is None:
+        diretor = self.__controlador_sistema.controlador_diretor.incluir_diretor(cria_id())
+        if diretor is None:
+            self.__tela_filme.mostra_mensagem("Tente novamente inserir os dados do diretor.")
+    
+    ator = None
+    while ator is None:
+        ator = self.__controlador_sistema.controlador_ator.incluir_ator("M", cria_id())
+        if ator is None:
+            self.__tela_filme.mostra_mensagem("Tente novamente inserir os dados do ator.")
+    
+    atriz = None
+    while atriz is None:
+        atriz = self.__controlador_sistema.controlador_ator.incluir_ator("F", cria_id())
+        if atriz is None:
+            self.__tela_filme.mostra_mensagem("Tente novamente inserir os dados da atriz.")
+    
+    if diretor is not None and ator is not None and atriz is not None:
+        filme = Filme(titulo, diretor, ator, atriz)
+        self.__filmes.append(filme)
+        self.__tela_filme.mostra_mensagem("Filme cadastrado com sucesso!")
+    else:
+        self.__tela_filme.mostra_mensagem("Erro: Não foi possível criar o filme devido a dados inválidos.")
 
   def lista_filmes(self):
     for f in self.__filmes:
