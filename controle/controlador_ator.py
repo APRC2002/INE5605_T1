@@ -7,9 +7,7 @@ from DAOs.ator_dao import AtorDAO
 
 class ControladorAtor():
 
-  # Fazer lançamento e tratamento de exceções, ao invés de apenas mostrar mensagem na tela.
   def __init__(self, controlador_sistema):
-    #self.__atores = [] removida em função do DAO
     self.__ator_DAO = AtorDAO()
     self.__controlador_sistema = controlador_sistema
     self.__tela_ator = TelaAtor()
@@ -19,7 +17,6 @@ class ControladorAtor():
     return self.__ator_DAO.get_all()
   
   def pega_ator_por_id(self, id: int):
-    #for ator in self.__atores:
     for ator in self.__ator_DAO.get_all():
       if(ator.id == id):
         return ator
@@ -47,7 +44,6 @@ class ControladorAtor():
             dados_ator["nacionalidade"],
             dados_ator["genero"]
         )
-        #self.__atores.append(novo_ator)
         self.__ator_DAO.add(novo_ator)
         self.__tela_ator.mostra_mensagem("Ator cadastrado com sucesso!")
         return novo_ator
@@ -94,17 +90,11 @@ class ControladorAtor():
 
   def lista_atores(self):
     dados_ator = []
-    #self.__tela_ator.mostra_mensagem("")
-    #self.__tela_ator.mostra_mensagem("-------------------ATORES CADASTRADOS-------------------")
-    #for ator in self.__atores:
+
     for ator in self.__ator_DAO.get_all():
-      #self.__tela_ator.mostra_ator({"nome": ator.nome, "id": ator.id, "data_de_nascimento": ator.data_de_nascimento, "nacionalidade": ator.nacionalidade, "genero": ator.genero})
       dados_ator.append({"nome":ator.nome, "id":ator.id, "data_de_nascimento":ator.data_de_nascimento, "nacionalidade":ator.nacionalidade, "genero":ator.genero})
     self.__tela_ator.mostra_ator(dados_ator)
-    #if len(self.__atores) == 0:
-    #  self.__tela_ator.mostra_mensagem("Não há atores cadastrados") TEM QUE MUDAR ISSO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #self.__tela_ator.mostra_mensagem("--------------------------------------------------------")
-    #self.__tela_ator.mostra_mensagem("")
+
 
   def excluir_ator(self):
     self.lista_atores()
@@ -112,7 +102,6 @@ class ControladorAtor():
     ator = self.pega_ator_por_id(id_ator)
 
     if(ator is not None):
-      #self.__atores.remove(ator)
       self.__ator_DAO.remove(ator.id)
       self.lista_atores()
     else:

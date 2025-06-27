@@ -6,7 +6,6 @@ from DAOs.diretor_dao import DiretorDAO
 
 class ControladorDiretor():
 
-  # Fazer lançamento e tratamento de exceções, ao invés de apenas mostrar mensagem na tela.
   def __init__(self, controlador_sistema):
     self.__diretor_DAO = DiretorDAO()
     self.__controlador_sistema = controlador_sistema
