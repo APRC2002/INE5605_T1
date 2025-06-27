@@ -16,7 +16,7 @@ class ControladorAtor():
 
   @property
   def atores(self):
-    return self.__atores
+    return self.__ator_DAO.get_all()
   
   def pega_ator_por_id(self, id: int):
     #for ator in self.__atores:
@@ -120,7 +120,8 @@ class ControladorAtor():
   
   def excluir_ator_por_id(self, id):
     ator = self.pega_ator_por_id(id)
-    self.__atores.remove(ator)
+    if ator is not None:
+        self.__ator_DAO.remove(ator.id)
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()

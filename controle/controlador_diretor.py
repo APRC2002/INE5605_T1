@@ -1,22 +1,23 @@
 from limite.tela_diretor import TelaDiretor
 from entidade.diretor import Diretor
 from exceptions.stringInvalida import NomeVazioException
+from DAOs.diretor_dao import DiretorDAO
 
 
 class ControladorDiretor():
 
   # Fazer lançamento e tratamento de exceções, ao invés de apenas mostrar mensagem na tela.
   def __init__(self, controlador_sistema):
-    self.__diretores = []
+    self.__diretor_DAO = DiretorDAO()
     self.__controlador_sistema = controlador_sistema
     self.__tela_diretor = TelaDiretor()
 
   @property
   def diretores(self):
-    return self.__diretores
+    return self.__diretor_DAO.get_all()
   
   def pega_diretor_por_id(self, id: int):
-    for diretor in self.__diretores:
+    for diretor in self.__diretor_DAO.get_all():
       if(diretor.id == id):
         return diretor
     return None
@@ -39,7 +40,7 @@ class ControladorDiretor():
             dados_diretor["data_de_nascimento"],
             dados_diretor["nacionalidade"]
         )
-        self.__diretores.append(novo_diretor)
+        self.__diretor_DAO.add(novo_diretor)
         self.__tela_diretor.mostra_mensagem("Diretor cadastrado com sucesso!")
         return novo_diretor
         
@@ -64,11 +65,11 @@ class ControladorDiretor():
         if not novos_dados_diretor["nome"].strip():
             raise NomeVazioException(novos_dados_diretor["nome"])
 
-        diretor.id = novos_dados_diretor["id"]
         diretor.nome = novos_dados_diretor["nome"]
         diretor.data_de_nascimento = novos_dados_diretor["data_de_nascimento"]
         diretor.nacionalidade = novos_dados_diretor["nacionalidade"]
 
+        self.__diretor_DAO.update(diretor)
         self.lista_diretores()
         self.__tela_diretor.mostra_mensagem("Diretor atualizado com sucesso!")
 
@@ -79,10 +80,10 @@ class ControladorDiretor():
 
 
   def lista_diretores(self):
-    for diretor in self.__diretores:
-      self.__tela_diretor.mostra_diretor({"id": diretor.id, "nome": diretor.nome, "data_de_nascimento": diretor.data_de_nascimento, "nacionalidade": diretor.nacionalidade})
-    if len(self.__diretores) == 0:
-      self.__tela_diretor.mostra_mensagem("Não há diretores cadastrados")
+    dados_diretor = []
+    for diretor in self.__diretor_DAO.get_all():
+      dados_diretor.append({"id": diretor.id, "nome": diretor.nome, "data_de_nascimento": diretor.data_de_nascimento, "nacionalidade": diretor.nacionalidade})
+    self.__tela_diretor.mostra_diretor(dados_diretor)
 
   def excluir_diretor(self):
     self.lista_diretores()
@@ -90,14 +91,15 @@ class ControladorDiretor():
     diretor = self.pega_diretor_por_id(id_diretor)
 
     if(diretor is not None):
-      self.__diretores.remove(diretor)
+      self.__diretor_DAO.remove(diretor.id)
       self.lista_diretores()
     else:
       self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor não existente")
 
   def excluir_diretor_por_id(self, id):
     diretor = self.pega_diretor_por_id(id)
-    self.__diretores.remove(diretor)
+    if diretor is not None:
+        self.__diretor_DAO.remove(diretor.id)
   
   def retornar(self):
     self.__controlador_sistema.abre_tela()
