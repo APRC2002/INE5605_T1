@@ -1,5 +1,6 @@
 from limite.tela_votacao import TelaVotacao
 from entidade.voto import Voto
+from exceptions.filmeInexistenteException import FilmeInexistenteException
 
 
 class ControladorVotacao():
@@ -12,23 +13,27 @@ class ControladorVotacao():
     
 
   def incluir_voto(self):
-    self.__controlador_sistema.controlador_membroAcademia.lista_membrosAcademia()
-    self.__controlador_sistema.controlador_categoria.listar_categorias()
-    dados_voto = self.__tela_votacao.pega_dados_voto()
+    try:
+        self.__controlador_sistema.controlador_membroAcademia.lista_membrosAcademia()
+        self.__controlador_sistema.controlador_categoria.listar_categorias()
+        dados_voto = self.__tela_votacao.pega_dados_voto()
 
-    membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
-    categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
-    votado = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
-    voto_repetido = False
-    for v in self.__votos:
-      if v.categoria == categoria and v.votante == membro_academia:
-        voto_repetido = True
-    if (membro_academia is not None and categoria is not None and not voto_repetido):
-      if categoria in votado.categorias:
-        voto = Voto(membro_academia, categoria, votado)
-        self.__votos.append(voto)
-    else:
-      self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
+        membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
+        categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
+        votado = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
+        voto_repetido = False
+        for v in self.__votos:
+          if v.categoria == categoria and v.votante == membro_academia:
+            voto_repetido = True
+        if (membro_academia is not None and categoria is not None and not voto_repetido):
+          if categoria in votado.categorias:
+            voto = Voto(membro_academia, categoria, votado)
+            self.__votos.append(voto)
+        else:
+          self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
+          
+    except FilmeInexistenteException as e:
+        self.__tela_votacao.mostra_mensagem(f"ATENÇÃO: {e}")
 
   # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_votos(self):

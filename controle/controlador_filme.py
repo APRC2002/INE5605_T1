@@ -2,6 +2,7 @@ from limite.tela_filme import TelaFilme
 from entidade.filme import Filme
 from entidade.diretor import Diretor
 from entidade.ator import Ator
+from exceptions.filmeInexistenteException import FilmeInexistenteException
 import time
 
 def current_milli_time():
@@ -26,7 +27,7 @@ class ControladorFilme():
     for filme in self.__filmes:
       if (filme.titulo == titulo):
         return filme
-    return None
+    raise FilmeInexistenteException(titulo)
 
   def incluir_filme(self):
     titulo = self.__tela_filme.pega_titulo_filme()
@@ -68,35 +69,39 @@ class ControladorFilme():
                                       "categorias": categorias})
 
   def excluir_filme(self):
-    self.lista_filmes()
-    titulo_filme = self.__tela_filme.seleciona_filme()
-    filme = self.pega_filme_por_nome(titulo_filme)
-    if (filme is not None):
-      ator = filme.ator_principal
-      atriz = filme.atriz_principal
-      diretor = filme.diretor
-      for a in self.__controlador_sistema.controlador_ator.atores:
-        if a.id == ator.id:
-          self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
-      for a in self.__controlador_sistema.controlador_ator.atores:
-        if a.id == atriz.id:
-          self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
-      for d in self.__controlador_sistema.controlador_diretor.diretores:
-        if d.id == diretor.id:
-          self.__controlador_sistema.controlador_diretor.excluir_diretor_por_id(d.id)
-      self.__filmes.remove(filme)
-      self.lista_filmes()
-    else:
-      self.__tela_filme.mostra_mensagem("ATENÇÃO: filme não existente")
+    try:
+        self.lista_filmes()
+        titulo_filme = self.__tela_filme.seleciona_filme()
+        filme = self.pega_filme_por_nome(titulo_filme)
+        
+        ator = filme.ator_principal
+        atriz = filme.atriz_principal
+        diretor = filme.diretor
+        for a in self.__controlador_sistema.controlador_ator.atores:
+          if a.id == ator.id:
+            self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
+        for a in self.__controlador_sistema.controlador_ator.atores:
+          if a.id == atriz.id:
+            self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
+        for d in self.__controlador_sistema.controlador_diretor.diretores:
+          if d.id == diretor.id:
+            self.__controlador_sistema.controlador_diretor.excluir_diretor_por_id(d.id)
+        self.__filmes.remove(filme)
+        self.lista_filmes()
+        
+    except FilmeInexistenteException as e:
+        self.__tela_filme.mostra_mensagem(f"ATENÇÃO: {e}")
   
   def alterar_titulo(self):
-    self.lista_filmes()
-    titulo_filme = self.__tela_filme.seleciona_filme()
-    filme = self.pega_filme_por_nome(titulo_filme)
-    if (filme is not None):
-      titulo = self.__tela_filme.pega_titulo_filme()
-      filme.troca_titulo(titulo)
-
+    try:
+        self.lista_filmes()
+        titulo_filme = self.__tela_filme.seleciona_filme()
+        filme = self.pega_filme_por_nome(titulo_filme)
+        titulo = self.__tela_filme.pega_titulo_filme()
+        filme.troca_titulo(titulo)
+        
+    except FilmeInexistenteException as e:
+        self.__tela_filme.mostra_mensagem(f"ATENÇÃO: {e}")
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
@@ -112,6 +117,7 @@ class ControladorFilme():
     for filme in self.__filmes:
       if filme.titulo == titulo_do_filme:
         return filme
+    raise FilmeInexistenteException(titulo_do_filme)
 
   def inclui_categoria(self, filme, categoria):
     for f in self.__filmes:
