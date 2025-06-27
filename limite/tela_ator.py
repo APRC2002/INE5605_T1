@@ -59,11 +59,12 @@ class TelaAtor():
 
     def mostra_ator(self, dados_ator):
         string_ator = ""
-        string_ator = string_ator + "ID DO ATOR: " + str(dados_ator["id"]) + '\n'
-        string_ator = string_ator + "NOME DO ATOR: " + dados_ator["nome"] + '\n'
-        string_ator = string_ator + "DATA DE NASCIMENTO DO ATOR: " + dados_ator["data_de_nascimento"] + '\n'
-        string_ator = string_ator + "NACIONALIDADE DO ATOR: " + dados_ator["nacionalidade"] + '\n'
-        string_ator = string_ator + "GENERO DO ATOR: " + dados_ator["genero"] + '\n\n'
+        for dado in dados_ator:
+            string_ator = string_ator + "ID DO ATOR: " + str(dado["id"]) + '\n'
+            string_ator = string_ator + "NOME DO ATOR: " + dado["nome"] + '\n'
+            string_ator = string_ator + "DATA DE NASCIMENTO DO ATOR: " + dado["data_de_nascimento"] + '\n'
+            string_ator = string_ator + "NACIONALIDADE DO ATOR: " + dado["nacionalidade"] + '\n'
+            string_ator = string_ator + "GENERO DO ATOR: " + dado["genero"] + '\n\n'
 
         sg.Popup('-------- DADOS DO ATOR ----------', string_ator)
 
