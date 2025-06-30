@@ -81,17 +81,13 @@ class ControladorCategoria():
   def listar_categorias(self):
     self.__tela_categoria.mostra_mensagem("----------------CATEGORIAS CADASTRADAS----------------")
     if len(self.__categoria_DAO.get_all()) == 0:
-      self.__tela_categoria.mostra_mensagem("")
       self.__tela_categoria.mostra_mensagem("AVISO: Não há categorias cadastradas")
-      self.__tela_categoria.mostra_mensagem("")
     else:
+      indicados = []
       for c in self.__categoria_DAO.get_all():
-        indicados = []
         for indicado in c.indicados:
           indicados.append(indicado.titulo)
         self.__tela_categoria.mostra_categoria({"nome": c.nome, "indicados": indicados})
-    self.__tela_categoria.mostra_mensagem("------------------------------------------------------")
-    self.__tela_categoria.mostra_mensagem("")
 
   def excluir_categoria(self):
     self.listar_categorias()
