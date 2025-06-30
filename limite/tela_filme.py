@@ -53,11 +53,12 @@ class TelaFilme():
 
     def mostra_filme(self, dados_filme):
         string_filme = ""
-        string_filme = string_filme + "TÍTULO DO FILME: " + dados_filme["titulo"] + '\n'
-        string_filme = string_filme + "DIRETOR: " + dados_filme["diretor"].nome + '\n'
-        string_filme = string_filme + "ATOR PRINCIPAL: " + dados_filme["ator"].nome + '\n'
-        string_filme = string_filme + "ATRIZ PRINCIPAL: " + dados_filme["atriz"].nome + '\n'
-        string_filme = string_filme + "CATEGORIAS: " + str(dados_filme["categorias"]) + '\n\n'
+        for filme in dados_filme:
+            string_filme = string_filme + "TÍTULO DO FILME: " + filme["titulo"] + '\n'
+            string_filme = string_filme + "DIRETOR: " + filme["diretor"].nome + '\n'
+            string_filme = string_filme + "ATOR PRINCIPAL: " + filme["ator"].nome + '\n'
+            string_filme = string_filme + "ATRIZ PRINCIPAL: " + filme["atriz"].nome + '\n'
+            string_filme = string_filme + "CATEGORIAS: " + str(filme["categorias"]) + '\n\n'
 
         sg.Popup('-------- DADOS DO FILME ----------', string_filme)
 
