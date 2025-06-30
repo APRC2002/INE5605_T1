@@ -18,7 +18,7 @@ class ControladorAtor():
   
   def pega_ator_por_id(self, id: int):
     for ator in self.__ator_DAO.get_all():
-      if(ator.id == id):
+      if(str(ator.id) == str(id)):
         return ator
     return None
 

@@ -17,7 +17,7 @@ class ControladorDiretor():
   
   def pega_diretor_por_id(self, id: int):
     for diretor in self.__diretor_DAO.get_all():
-      if(diretor.id == id):
+      if(str(diretor.id) == str(id)):
         return diretor
     return None
 
