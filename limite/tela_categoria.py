@@ -75,8 +75,8 @@ class TelaCategoria():
     def mostra_categoria(self, dados_categoria):
         string_categoria = ""
         for dado in dados_categoria:
-            string_categoria = string_categoria + "NOME DA CATEGORIA: " + dados_categoria["nome"] + '\n'
-            string_categoria = string_categoria + "INDICADOS DA CATEGORIA: " + str(dados_categoria["indicados"]) + '\n\n'
+            string_categoria = string_categoria + "NOME DA CATEGORIA: " + dado["nome"] + '\n'
+            string_categoria = string_categoria + "INDICADOS DA CATEGORIA: " + str(dado["indicados"]) + '\n\n'
 
         sg.Popup('-------- DADOS DA CATEGORIA ----------', string_categoria)
 

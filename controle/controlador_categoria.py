@@ -85,9 +85,11 @@ class ControladorCategoria():
     else:
       indicados = []
       for c in self.__categoria_DAO.get_all():
+        indicados_categoria = []
         for indicado in c.indicados:
-          indicados.append(indicado.titulo)
-        self.__tela_categoria.mostra_categoria({"nome": c.nome, "indicados": indicados})
+          indicados_categoria.append(indicado.titulo)
+        indicados.append({"nome":c.nome,"indicados":indicados_categoria})
+      self.__tela_categoria.mostra_categoria(indicados)
 
   def excluir_categoria(self):
     self.listar_categorias()
