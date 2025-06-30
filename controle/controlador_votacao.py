@@ -22,7 +22,6 @@ class ControladorVotacao():
         categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
         votado = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
         
-        # Check if all required entities were found
         if membro_academia is None:
             self.__tela_votacao.mostra_mensagem("ATENÇÃO: Membro da academia não encontrado.")
             return
@@ -35,7 +34,6 @@ class ControladorVotacao():
             self.__tela_votacao.mostra_mensagem("ATENÇÃO: Filme não encontrado.")
             return
         
-        # Check for duplicate vote
         voto_repetido = False
         for v in self.__voto_DAO.get_all():
           if v.categoria == categoria and v.votante == membro_academia:
@@ -46,12 +44,10 @@ class ControladorVotacao():
             self.__tela_votacao.mostra_mensagem("ATENÇÃO: Voto já existente para este membro nesta categoria.")
             return
         
-        # Check if the film is nominated in the category
         if categoria not in votado.categorias:
             self.__tela_votacao.mostra_mensagem("ATENÇÃO: O filme não está indicado nesta categoria.")
             return
         
-        # Create and save the vote
         voto = Voto(membro_academia, categoria, votado)
         self.__voto_DAO.add(voto)
         self.__tela_votacao.mostra_mensagem("Voto cadastrado com sucesso!")
