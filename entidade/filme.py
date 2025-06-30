@@ -64,3 +64,11 @@ class Filme:
     
     def troca_titulo(self, titulo):
         self.__titulo = titulo
+    
+    def __eq__(self, other):
+        if isinstance(other, Filme):
+            return self.__titulo == other.__titulo
+        return False
+    
+    def __hash__(self):
+        return hash(self.__titulo)
