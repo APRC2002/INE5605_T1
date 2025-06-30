@@ -62,25 +62,29 @@ class ControladorAtor():
     try:
         self.lista_atores()
         id_ator = self.__tela_ator.seleciona_ator()
-        ator = self.pega_ator_por_id(id_ator)
+        try:
+            id_ator = int(id_ator)
+            ator = self.pega_ator_por_id(id_ator)
 
-        if ator is None:
-            self.__tela_ator.mostra_mensagem("ATENÇÃO: Ator não encontrado.")
-            return
+            if ator is None:
+                self.__tela_ator.mostra_mensagem("ATENÇÃO: Ator não encontrado.")
+                return
 
-        novos_dados_ator = self.__tela_ator.pega_dados_ator(ator.genero)
-        
-        if not novos_dados_ator["nome"].strip():
-            raise NomeVazioException(novos_dados_ator["nome"])
+            novos_dados_ator = self.__tela_ator.pega_dados_ator(ator.genero)
+            
+            if not novos_dados_ator["nome"].strip():
+                raise NomeVazioException(novos_dados_ator["nome"])
 
-        ator.nome = novos_dados_ator["nome"]
-        ator.data_de_nascimento = novos_dados_ator["data_de_nascimento"]
-        ator.nacionalidade = novos_dados_ator["nacionalidade"]
-        ator.genero = novos_dados_ator["genero"]
+            ator.nome = novos_dados_ator["nome"]
+            ator.data_de_nascimento = novos_dados_ator["data_de_nascimento"]
+            ator.nacionalidade = novos_dados_ator["nacionalidade"]
+            ator.genero = novos_dados_ator["genero"]
 
-        self.__ator_DAO.update(ator)
-        self.lista_atores()
-        self.__tela_ator.mostra_mensagem("Ator atualizado com sucesso!")
+            self.__ator_DAO.update(ator)
+            self.lista_atores()
+            self.__tela_ator.mostra_mensagem("Ator atualizado com sucesso!")
+        except ValueError:
+            self.__tela_ator.mostra_mensagem("ATENÇÃO: ID inválido. Digite um número.")
 
     except NomeVazioException as e:
         self.__tela_ator.mostra_mensagem(f"ERROR: {e}")
@@ -99,13 +103,17 @@ class ControladorAtor():
   def excluir_ator(self):
     self.lista_atores()
     id_ator = self.__tela_ator.seleciona_ator()
-    ator = self.pega_ator_por_id(id_ator)
+    try:
+        id_ator = int(id_ator)
+        ator = self.pega_ator_por_id(id_ator)
 
-    if(ator is not None):
-      self.__ator_DAO.remove(ator.id)
-      self.lista_atores()
-    else:
-      self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
+        if(ator is not None):
+          self.__ator_DAO.remove(ator.id)
+          self.lista_atores()
+        else:
+          self.__tela_ator.mostra_mensagem("ATENCAO: Ator não existente")
+    except ValueError:
+        self.__tela_ator.mostra_mensagem("ATENÇÃO: ID inválido. Digite um número.")
   
   def excluir_ator_por_id(self, id):
     ator = self.pega_ator_por_id(id)

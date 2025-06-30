@@ -1,37 +1,37 @@
-
 from limite.tela_categoria import TelaCategoria
 from entidade.categoria import Categoria
+from DAOs.categoria_dao import CategoriaDAO
 
 
 class ControladorCategoria():
 
   def __init__(self, controlador_sistema):
-    self.__categorias = []
-    categoria = Categoria("Melhor filme")
-    self.__categorias.append(categoria)
+    self.__categoria_DAO = CategoriaDAO()
+    if len(self.__categoria_DAO.get_all()) == 0:
+        categoria = Categoria("Melhor filme")
+        self.__categoria_DAO.add(categoria)
     self.__controlador_sistema = controlador_sistema
     self.__tela_categoria = TelaCategoria()
 
   @property
   def categorias(self):
-    return self.__categorias
+    return self.__categoria_DAO.get_all()
 
   def pega_categoria(self, nome: str):
-    for categoria in self.__categorias:
+    for categoria in self.__categoria_DAO.get_all():
       if(categoria.nome == nome):
         return categoria
     return None
 
-  # Sugestão: não deixe cadastrar duas categorias com o mesmo nome
   def incluir_categoria(self):
     nome_categoria = self.__tela_categoria.pega_nome()
     categoria = None
-    for c in self.__categorias:
+    for c in self.__categoria_DAO.get_all():
       if c.nome == nome_categoria:
         categoria = c
     if categoria == None:
       categoria = Categoria(nome_categoria)
-      self.__categorias.append(categoria)
+      self.__categoria_DAO.add(categoria)
     else:
       self.__tela_categoria.mostra_mensagem("AVISO: Já há uma categoria cadastrada com esse nome")
 
@@ -39,14 +39,15 @@ class ControladorCategoria():
     self.listar_categorias()
     categoria = self.__tela_categoria.pega_nome()
     novo_nome = self.__tela_categoria.pega_nome()
-    for c in self.__categorias:
+    for c in self.__categoria_DAO.get_all():
       if c.nome == categoria:
         c.nome = novo_nome
+        self.__categoria_DAO.update(c)
 
   def adicionar_indicados(self):
     self.listar_categorias()
     nome_categoria = self.__tela_categoria.pega_nome()
-    for c in self.__categorias:
+    for c in self.__categoria_DAO.get_all():
       if c.nome == nome_categoria:
         categoria = c
 
@@ -57,6 +58,7 @@ class ControladorCategoria():
       if indicado not in categoria.indicados:
         categoria.inclui_indicado(indicado)
         self.__controlador_sistema.controlador_filme.inclui_categoria(titulo_indicado, categoria)
+        self.__categoria_DAO.update(categoria)
       else:
         self.__tela_categoria.mostra_mensagem("AVISO: Esse filme já foi indicado")
     else:
@@ -65,7 +67,7 @@ class ControladorCategoria():
   def remover_indicado(self):
     self.listar_categorias()
     nome_categoria = self.__tela_categoria.pega_nome()
-    for c in self.__categorias:
+    for c in self.__categoria_DAO.get_all():
       if c.nome == nome_categoria:
         categoria = c
 
@@ -74,15 +76,16 @@ class ControladorCategoria():
     for i in categoria.indicados:
       if i.titulo == indicado:
         categoria.indicados.remove(i)
+        self.__categoria_DAO.update(categoria)
 
   def listar_categorias(self):
     self.__tela_categoria.mostra_mensagem("----------------CATEGORIAS CADASTRADAS----------------")
-    if len(self.__categorias) == 0:
+    if len(self.__categoria_DAO.get_all()) == 0:
       self.__tela_categoria.mostra_mensagem("")
       self.__tela_categoria.mostra_mensagem("AVISO: Não há categorias cadastradas")
       self.__tela_categoria.mostra_mensagem("")
     else:
-      for c in self.__categorias:
+      for c in self.__categoria_DAO.get_all():
         indicados = []
         for indicado in c.indicados:
           indicados.append(indicado.titulo)
@@ -95,7 +98,7 @@ class ControladorCategoria():
     categoria = self.__tela_categoria.pega_nome()
     categoria = self.pega_categoria(categoria)
     if categoria is not None:
-      self.__categorias.remove(categoria)
+      self.__categoria_DAO.remove(categoria.nome)
     else:
       self.__tela_categoria.mostra_mensagem("Categoria não cadastrada")
 

@@ -47,27 +47,21 @@ class ControladorSistema:
         self.abre_tela()
 
     def cadastra_membroAcademia(self):
-        # Chama o controlador de MembroAcademia
         self.__controlador_membroAcademia.abre_tela()
 
     def cadastra_ator(self):
-        # Chama o controlador de Ator
         self.__controlador_ator.abre_tela()
 
     def cadastra_diretor(self):
-        # Chama o controlador de Diretor
         self.__controlador_diretor.abre_tela()
 
     def cadastra_filme(self):
-        # Chama o controlador de Filme
         self.__controlador_filme.abre_tela()
 
     def cadastra_categoria(self):
-        # Chama o controlador de Categoria
         self.__controlador_categoria.abre_tela()
 
     def cadastra_votacao(self):
-        # Chama o controlador de Votacao
         self.__controlador_votacao.abre_tela()
 
     def encerra_sistema(self):

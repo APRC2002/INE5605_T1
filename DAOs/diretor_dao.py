@@ -7,16 +7,14 @@ class DiretorDAO(DAO):
 
     def add(self, diretor: Diretor):
         if(diretor is not None) and isinstance(diretor, Diretor):
-            super().add(diretor.id, diretor)
+            super().add(str(diretor.id), diretor)
 
     def update(self, diretor: Diretor):
-        if((diretor is not None) and isinstance(diretor, Diretor) and isinstance(diretor.id, int)):
-            super().update(diretor.id, diretor)
+        if((diretor is not None) and isinstance(diretor, Diretor)):
+            super().update(str(diretor.id), diretor)
 
     def get(self, key: int):
-        if isinstance(key, int):
-            return super().get(key)
+        return super().get(str(key))
 
     def remove(self, key: int):
-        if(isinstance(key, int)):
-            return super().remove(key) 
+        return super().remove(str(key)) 

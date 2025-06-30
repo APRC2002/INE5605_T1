@@ -3,6 +3,7 @@ from entidade.filme import Filme
 from entidade.diretor import Diretor
 from entidade.ator import Ator
 from exceptions.filmeInexistenteException import FilmeInexistenteException
+from DAOs.filme_dao import FilmeDAO
 import time
 
 def current_milli_time():
@@ -15,16 +16,16 @@ def cria_id():
 class ControladorFilme():
 
   def __init__(self, controlador_sistema):
-    self.__filmes = []
+    self.__filme_DAO = FilmeDAO()
     self.__tela_filme = TelaFilme()
     self.__controlador_sistema = controlador_sistema
 
   @property
   def filmes(self):
-    return self.__filmes
+    return self.__filme_DAO.get_all()
 
   def pega_filme_por_nome(self, titulo: str):
-    for filme in self.__filmes:
+    for filme in self.__filme_DAO.get_all():
       if (filme.titulo == titulo):
         return filme
     raise FilmeInexistenteException(titulo)
@@ -52,13 +53,13 @@ class ControladorFilme():
     
     if diretor is not None and ator is not None and atriz is not None:
         filme = Filme(titulo, diretor, ator, atriz)
-        self.__filmes.append(filme)
+        self.__filme_DAO.add(filme)
         self.__tela_filme.mostra_mensagem("Filme cadastrado com sucesso!")
     else:
         self.__tela_filme.mostra_mensagem("Erro: Não foi possível criar o filme devido a dados inválidos.")
 
   def lista_filmes(self):
-    for f in self.__filmes:
+    for f in self.__filme_DAO.get_all():
       categorias = []
       for categoria in f.categorias:
         categorias.append(categoria.nome)
@@ -86,7 +87,7 @@ class ControladorFilme():
         for d in self.__controlador_sistema.controlador_diretor.diretores:
           if d.id == diretor.id:
             self.__controlador_sistema.controlador_diretor.excluir_diretor_por_id(d.id)
-        self.__filmes.remove(filme)
+        self.__filme_DAO.remove(filme.titulo)
         self.lista_filmes()
         
     except FilmeInexistenteException as e:
@@ -99,6 +100,7 @@ class ControladorFilme():
         filme = self.pega_filme_por_nome(titulo_filme)
         titulo = self.__tela_filme.pega_titulo_filme()
         filme.troca_titulo(titulo)
+        self.__filme_DAO.update(filme)
         
     except FilmeInexistenteException as e:
         self.__tela_filme.mostra_mensagem(f"ATENÇÃO: {e}")
@@ -114,12 +116,13 @@ class ControladorFilme():
       lista_opcoes[self.__tela_filme.tela_opcoes()]()
   
   def retorna_filme(self, titulo_do_filme):
-    for filme in self.__filmes:
+    for filme in self.__filme_DAO.get_all():
       if filme.titulo == titulo_do_filme:
         return filme
     raise FilmeInexistenteException(titulo_do_filme)
 
   def inclui_categoria(self, filme, categoria):
-    for f in self.__filmes:
+    for f in self.__filme_DAO.get_all():
       if f.titulo == filme and categoria not in f.categorias:
         f.adiciona_categoria(categoria)
+        self.__filme_DAO.update(f)

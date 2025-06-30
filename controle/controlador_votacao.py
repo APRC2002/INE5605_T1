@@ -1,13 +1,13 @@
 from limite.tela_votacao import TelaVotacao
 from entidade.voto import Voto
 from exceptions.filmeInexistenteException import FilmeInexistenteException
+from DAOs.voto_dao import VotoDAO
 
 
 class ControladorVotacao():
 
-  # Fazer lançamento e tratamento de exceções, ao invés de apenas mostrar mensagem na tela.
   def __init__(self, controlador_sistema):
-    self.__votos = []
+    self.__voto_DAO = VotoDAO()
     self.__controlador_sistema = controlador_sistema
     self.__tela_votacao = TelaVotacao()
     
@@ -22,22 +22,21 @@ class ControladorVotacao():
         categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
         votado = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
         voto_repetido = False
-        for v in self.__votos:
+        for v in self.__voto_DAO.get_all():
           if v.categoria == categoria and v.votante == membro_academia:
             voto_repetido = True
         if (membro_academia is not None and categoria is not None and not voto_repetido):
           if categoria in votado.categorias:
             voto = Voto(membro_academia, categoria, votado)
-            self.__votos.append(voto)
+            self.__voto_DAO.add(voto)
         else:
           self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
           
     except FilmeInexistenteException as e:
         self.__tela_votacao.mostra_mensagem(f"ATENÇÃO: {e}")
 
-  # Sugestão: se a lista estiver vazia, mostrar a mensagem de lista vazia
   def lista_votos(self):
-    for voto in self.__votos:
+    for voto in self.__voto_DAO.get_all():
       self.__tela_votacao.mostra_voto({"votante": voto.votante.nome, "categoria": voto.categoria.nome, "votado": voto.votado.titulo})
 
   def excluir_voto(self):
@@ -46,7 +45,8 @@ class ControladorVotacao():
     voto = self.pega_voto_por_id(id_voto)
 
     if(voto is not None):
-      self.__votos.remove(voto)
+      key = f"{voto.votante.id}_{voto.categoria.nome}"
+      self.__voto_DAO.remove(key)
       self.lista_votos()
     else:
       self.__tela_votacao.mostra_mensagem("ATENCAO: Voto não existente")
@@ -61,7 +61,7 @@ class ControladorVotacao():
     
     for indicado in categoria_escolhida.indicados:
       dict[indicado.titulo] = 0
-      for voto in self.__votos:
+      for voto in self.__voto_DAO.get_all():
         if voto.categoria == categoria_escolhida and voto.votado == indicado:
           dict[indicado.titulo] += 1
     
@@ -82,7 +82,7 @@ class ControladorVotacao():
       dict_votos = {}
       for indicado in categoria.indicados:
         dict_votos[indicado.titulo] = 0
-        for voto in self.__votos:
+        for voto in self.__voto_DAO.get_all():
           if voto.categoria == categoria and voto.votado == indicado:
             dict_votos[indicado.titulo] += 1
       

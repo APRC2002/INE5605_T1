@@ -53,24 +53,28 @@ class ControladorDiretor():
     try:
         self.lista_diretores()
         id_diretor = self.__tela_diretor.seleciona_diretor()
-        diretor = self.pega_diretor_por_id(id_diretor)
+        try:
+            id_diretor = int(id_diretor)
+            diretor = self.pega_diretor_por_id(id_diretor)
 
-        if diretor is None:
-            self.__tela_diretor.mostra_mensagem("ATENÇÃO: Diretor não encontrado.")
-            return
+            if diretor is None:
+                self.__tela_diretor.mostra_mensagem("ATENÇÃO: Diretor não encontrado.")
+                return
 
-        novos_dados_diretor = self.__tela_diretor.pega_dados_diretor()
-        
-        if not novos_dados_diretor["nome"].strip():
-            raise NomeVazioException(novos_dados_diretor["nome"])
+            novos_dados_diretor = self.__tela_diretor.pega_dados_diretor()
+            
+            if not novos_dados_diretor["nome"].strip():
+                raise NomeVazioException(novos_dados_diretor["nome"])
 
-        diretor.nome = novos_dados_diretor["nome"]
-        diretor.data_de_nascimento = novos_dados_diretor["data_de_nascimento"]
-        diretor.nacionalidade = novos_dados_diretor["nacionalidade"]
+            diretor.nome = novos_dados_diretor["nome"]
+            diretor.data_de_nascimento = novos_dados_diretor["data_de_nascimento"]
+            diretor.nacionalidade = novos_dados_diretor["nacionalidade"]
 
-        self.__diretor_DAO.update(diretor)
-        self.lista_diretores()
-        self.__tela_diretor.mostra_mensagem("Diretor atualizado com sucesso!")
+            self.__diretor_DAO.update(diretor)
+            self.lista_diretores()
+            self.__tela_diretor.mostra_mensagem("Diretor atualizado com sucesso!")
+        except ValueError:
+            self.__tela_diretor.mostra_mensagem("ATENÇÃO: ID inválido. Digite um número.")
 
     except NomeVazioException as e:
         self.__tela_diretor.mostra_mensagem(f"ERRO: {e}")
@@ -87,13 +91,17 @@ class ControladorDiretor():
   def excluir_diretor(self):
     self.lista_diretores()
     id_diretor = self.__tela_diretor.seleciona_diretor()
-    diretor = self.pega_diretor_por_id(id_diretor)
+    try:
+        id_diretor = int(id_diretor)
+        diretor = self.pega_diretor_por_id(id_diretor)
 
-    if(diretor is not None):
-      self.__diretor_DAO.remove(diretor.id)
-      self.lista_diretores()
-    else:
-      self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor não existente")
+        if(diretor is not None):
+          self.__diretor_DAO.remove(diretor.id)
+          self.lista_diretores()
+        else:
+          self.__tela_diretor.mostra_mensagem("ATENCAO: Diretor não existente")
+    except ValueError:
+        self.__tela_diretor.mostra_mensagem("ATENÇÃO: ID inválido. Digite um número.")
 
   def excluir_diretor_por_id(self, id):
     diretor = self.pega_diretor_por_id(id)
