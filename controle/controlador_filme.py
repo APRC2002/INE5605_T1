@@ -78,15 +78,11 @@ class ControladorFilme():
         ator = filme.ator_principal
         atriz = filme.atriz_principal
         diretor = filme.diretor
-        for a in self.__controlador_sistema.controlador_ator.atores:
-          if a.id == ator.id:
-            self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
-        for a in self.__controlador_sistema.controlador_ator.atores:
-          if a.id == atriz.id:
-            self.__controlador_sistema.controlador_ator.excluir_ator_por_id(a.id)
-        for d in self.__controlador_sistema.controlador_diretor.diretores:
-          if d.id == diretor.id:
-            self.__controlador_sistema.controlador_diretor.excluir_diretor_por_id(d.id)
+        
+        self.__controlador_sistema.controlador_ator.excluir_ator_por_id(ator.id)
+        self.__controlador_sistema.controlador_ator.excluir_ator_por_id(atriz.id)
+        self.__controlador_sistema.controlador_diretor.excluir_diretor_por_id(diretor.id)
+        
         self.__filme_DAO.remove(filme.titulo)
         self.lista_filmes()
         
