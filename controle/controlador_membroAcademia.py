@@ -66,10 +66,8 @@ class ControladorMembroAcademia():
 
     if len(self.__membro_academia_DAO.get_all()) == 0:
       self.__tela_membroAcademia.mostra_mensagem("Aviso: Não há membros cadastrados")
-    dados_membro = []
     for membro in self.__membro_academia_DAO.get_all():
-      dados_membro.append({"nome": membro.nome, "ID": membro.id, "nacionalidade": membro.nacionalidade, "data_de_nascimento": membro.data_de_nascimento})
-    self.__tela_membroAcademia.mostra_membroAcademia(dados_membro)
+      self.__tela_membroAcademia.mostra_membroAcademia({"nome": membro.nome, "ID": membro.id, "nacionalidade": membro.nacionalidade, "data_de_nascimento": membro.data_de_nascimento})
 
   def excluir_membro(self):
     self.lista_membrosAcademia()

@@ -57,11 +57,10 @@ class TelaMembroAcademia():
 
     def mostra_membroAcademia(self, dados_membroAcademia):
         string_membro = ""
-        for dado in dados_membroAcademia:
-            string_membro = string_membro + "NOME DO MEMBRO: " + dado["nome"] + '\n'
-            string_membro = string_membro + "ID DO MEMBRO: " + str(dado["ID"]) + '\n'
-            string_membro = string_membro + "NACIONALIDADE DO MEMBRO: " + dado["nacionalidade"] + '\n'
-            string_membro = string_membro + "DATA DE NASCIMENTO DO MEMBRO: " + dado["data_de_nascimento"] + '\n\n'
+        string_membro = string_membro + "NOME DO MEMBRO: " + dados_membroAcademia["nome"] + '\n'
+        string_membro = string_membro + "ID DO MEMBRO: " + str(dados_membroAcademia["ID"]) + '\n'
+        string_membro = string_membro + "NACIONALIDADE DO MEMBRO: " + dados_membroAcademia["nacionalidade"] + '\n'
+        string_membro = string_membro + "DATA DE NASCIMENTO DO MEMBRO: " + dados_membroAcademia["data_de_nascimento"] + '\n\n'
 
         sg.Popup('-------- DADOS DO MEMBRO DA ACADEMIA ----------', string_membro)
 
