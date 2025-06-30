@@ -59,15 +59,17 @@ class ControladorFilme():
         self.__tela_filme.mostra_mensagem("Erro: Não foi possível criar o filme devido a dados inválidos.")
 
   def lista_filmes(self):
+    filmes = []
     for f in self.__filme_DAO.get_all():
       categorias = []
       for categoria in f.categorias:
         categorias.append(categoria.nome)
-      self.__tela_filme.mostra_filme({"titulo": f.titulo,
-                                      "ator": f.ator_principal,
-                                      "atriz": f.atriz_principal,
-                                      "diretor": f.diretor,
-                                      "categorias": categorias})
+      filmes.append({"titulo": f.titulo,
+                     "ator": f.ator_principal,
+                     "atriz": f.atriz_principal,
+                     "diretor": f.diretor,
+                     "categorias": categorias})
+    self.__tela_filme.mostra_filme(filmes)
 
   def excluir_filme(self):
     try:
