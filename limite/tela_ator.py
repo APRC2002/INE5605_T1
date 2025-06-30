@@ -8,19 +8,17 @@ class TelaAtor():
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
+        opcao = 0
         if values['1']:
             opcao = 1
-        if values['2']:
+        elif values['2']:
             opcao = 2
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
+        elif values['0'] or button in (None, 'Cancelar'):
             opcao = 0
         self.close()
         return opcao
 
     def init_opcoes(self):
-        #sg.theme_previewer()
         sg.theme('DarkTeal4')
         layout = [
             [sg.Text('-------- ATOR ----------', font=("Helvica", 25))],

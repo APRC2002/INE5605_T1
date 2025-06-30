@@ -8,27 +8,25 @@ class TelaSistema:
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
+        opcao = 0
         if values['1']:
             opcao = 1
-        if values['2']:
+        elif values['2']:
             opcao = 2
-        if values['3']:
+        elif values['3']:
             opcao = 3
-        if values['4']:
+        elif values['4']:
             opcao = 4
-        if values['5']:
+        elif values['5']:
             opcao = 5
-        if values['6']:
-            opcao = 6
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
+        elif values['6']:
+            opcao = 6        
+        elif values['0'] or button in (None, 'Cancelar'):
             opcao = 0
         self.close()
         return opcao
 
     def init_opcoes(self):
-        #sg.theme_previewer()
         sg.theme('DarkTeal4')
         layout = [
             [sg.Text('-------- Premiação de filmes nacionais que não premia atores ---------', font=("Helvica", 25))],

@@ -8,19 +8,17 @@ class TelaDiretor():
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
+        opcao = 0
         if values['1']:
             opcao = 1
-        if values['2']:
+        elif values['2']:
             opcao = 2
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
+        elif values['0'] or button in (None, 'Cancelar'):
             opcao = 0
         self.close()
         return opcao
 
     def init_opcoes(self):
-        #sg.theme_previewer()
         sg.theme('DarkTeal4')
         layout = [
             [sg.Text('-------- DIRETOR ----------', font=("Helvica", 25))],
@@ -53,10 +51,11 @@ class TelaDiretor():
 
     def mostra_diretor(self, dados_diretor):
         string_diretor = ""
-        string_diretor = string_diretor + "ID DO DIRETOR: " + str(dados_diretor["id"]) + '\n'
-        string_diretor = string_diretor + "NOME DO DIRETOR: " + dados_diretor["nome"] + '\n'
-        string_diretor = string_diretor + "DATA DE NASCIMENTO DO DIRETOR: " + dados_diretor["data_de_nascimento"] + '\n'
-        string_diretor = string_diretor + "NACIONALIDADE DO DIRETOR: " + dados_diretor["nacionalidade"] + '\n\n'
+        for dado in dados_diretor:
+            string_diretor = string_diretor + "ID DO DIRETOR: " + str(dado["id"]) + '\n'
+            string_diretor = string_diretor + "NOME DO DIRETOR: " + dado["nome"] + '\n'
+            string_diretor = string_diretor + "DATA DE NASCIMENTO DO DIRETOR: " + dado["data_de_nascimento"] + '\n'
+            string_diretor = string_diretor + "NACIONALIDADE DO DIRETOR: " + dado["nacionalidade"] + '\n\n'
 
         sg.Popup('-------- DADOS DO DIRETOR ----------', string_diretor)
 
