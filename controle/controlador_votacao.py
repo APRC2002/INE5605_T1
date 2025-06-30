@@ -21,25 +21,70 @@ class ControladorVotacao():
         membro_academia = self.__controlador_sistema.controlador_membroAcademia.pega_membro_por_id(dados_voto["id"])
         categoria = self.__controlador_sistema.controlador_categoria.pega_categoria(dados_voto["nome"])
         votado = self.__controlador_sistema.controlador_filme.pega_filme_por_nome(dados_voto["votado"])
+        
+        # Check if all required entities were found
+        if membro_academia is None:
+            self.__tela_votacao.mostra_mensagem("ATENÇÃO: Membro da academia não encontrado.")
+            return
+            
+        if categoria is None:
+            self.__tela_votacao.mostra_mensagem("ATENÇÃO: Categoria não encontrada.")
+            return
+            
+        if votado is None:
+            self.__tela_votacao.mostra_mensagem("ATENÇÃO: Filme não encontrado.")
+            return
+        
+        # Check for duplicate vote
         voto_repetido = False
         for v in self.__voto_DAO.get_all():
           if v.categoria == categoria and v.votante == membro_academia:
             voto_repetido = True
-        if (membro_academia is not None and categoria is not None and not voto_repetido):
-          if categoria in votado.categorias:
-            voto = Voto(membro_academia, categoria, votado)
-            self.__voto_DAO.add(voto)
-        else:
-          self.__tela_votacao.mostra_mensagem("ATENCAO: Voto já existente")
+            break
+            
+        if voto_repetido:
+            self.__tela_votacao.mostra_mensagem("ATENÇÃO: Voto já existente para este membro nesta categoria.")
+            return
+        
+        # Check if the film is nominated in the category
+        if categoria not in votado.categorias:
+            self.__tela_votacao.mostra_mensagem("ATENÇÃO: O filme não está indicado nesta categoria.")
+            return
+        
+        # Create and save the vote
+        voto = Voto(membro_academia, categoria, votado)
+        self.__voto_DAO.add(voto)
+        self.__tela_votacao.mostra_mensagem("Voto cadastrado com sucesso!")
           
     except FilmeInexistenteException as e:
         self.__tela_votacao.mostra_mensagem(f"ATENÇÃO: {e}")
+    except Exception as e:
+        self.__tela_votacao.mostra_mensagem(f"Erro inesperado: {e}")
 
   def lista_votos(self):
-    for voto in self.__voto_DAO.get_all():
-      self.__tela_votacao.mostra_voto({"votante": voto.votante.nome, "categoria": voto.categoria.nome, "votado": voto.votado.titulo})
+    votos = self.__voto_DAO.get_all()
+    if len(votos) == 0:
+      self.__tela_votacao.mostra_mensagem("Não há votos cadastrados no sistema.")
+    else:
+      for voto in votos:
+        self.__tela_votacao.mostra_voto({"votante": voto.votante.nome, "categoria": voto.categoria.nome, "votado": voto.votado.titulo})
+
+  def pega_voto_por_id(self, id_votante):
+    try:
+        id_votante = int(id_votante)
+        for voto in self.__voto_DAO.get_all():
+            if str(voto.votante.id) == str(id_votante):
+                return voto
+        return None
+    except ValueError:
+        return None
 
   def excluir_voto(self):
+    votos = self.__voto_DAO.get_all()
+    if len(votos) == 0:
+      self.__tela_votacao.mostra_mensagem("Não há votos cadastrados no sistema para excluir.")
+      return
+      
     self.lista_votos()
     id_voto = self.__tela_votacao.seleciona_voto()
     voto = self.pega_voto_por_id(id_voto)

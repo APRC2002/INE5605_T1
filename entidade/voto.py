@@ -1,4 +1,3 @@
-
 from entidade.membroAcademia import MembroAcademia
 from entidade.filme import Filme
 from entidade.categoria import Categoria
@@ -22,12 +21,12 @@ class Voto:
             self.__votante = votante
 
     @property
-    def categoria(self) -> MembroAcademia:
+    def categoria(self) -> Categoria:
         return self.__categoria
     
     @categoria.setter
-    def categoria(self, categoria: MembroAcademia):
-        if isinstance(categoria, MembroAcademia):
+    def categoria(self, categoria: Categoria):
+        if isinstance(categoria, Categoria):
             self.__categoria = categoria
 
     @property

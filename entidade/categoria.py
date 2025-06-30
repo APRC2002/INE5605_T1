@@ -1,4 +1,3 @@
-
 class Categoria:
     def __init__(self, nome: str):
         self.__nome = nome
@@ -26,3 +25,11 @@ class Categoria:
     def remove_indicado(self, indicados):
         for indicado in indicados:
             self.__indicados.remove(indicado)
+    
+    def __eq__(self, other):
+        if isinstance(other, Categoria):
+            return self.__nome == other.__nome
+        return False
+    
+    def __hash__(self):
+        return hash(self.__nome)
